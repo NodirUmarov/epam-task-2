@@ -1,2 +1,10 @@
-package com.epam.esm.dao.config;public class DatabaseInitialization {
+package com.epam.esm.dao.config;
+
+import org.springframework.stereotype.Component;
+
+@Component
+public class DatabaseInitialization {
+
+    
+
 }

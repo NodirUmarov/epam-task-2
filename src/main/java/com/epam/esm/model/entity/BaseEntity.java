@@ -1,12 +1,16 @@
 package com.epam.esm.model.entity;
 
-import java.time.LocalDateTime;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
-public class BaseEntity {
-
-    Long id;
-    LocalDateTime createDate;
-    LocalDateTime lastUpdateDate;
-
-
+@Getter
+@Setter
+@Builder
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
+public abstract class BaseEntity<ID> {
+    ID id;
 }
+
