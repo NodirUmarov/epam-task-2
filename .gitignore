@@ -20,5 +20,4 @@ gradle-app.setting
 .run
 
 # Propertiest config
-application-local.properties
-.env
+src/main/resources/.env
