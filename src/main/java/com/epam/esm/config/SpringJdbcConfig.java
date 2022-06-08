@@ -13,7 +13,7 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import javax.sql.DataSource;
 
 @Configuration
-@PropertySource("classpath:application-local.properties")
+@PropertySource("classpath:application.properties")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class SpringJdbcConfig {
 

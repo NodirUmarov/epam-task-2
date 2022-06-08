@@ -4,6 +4,7 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Getter
@@ -13,11 +14,11 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class GiftCertificateEntity extends BaseEntity<Long> {
+public class GiftCertificateEntity extends BaseEntityAudit<Long> {
 
     String name;
     String description;
-    String price;
+    BigDecimal price;
     LocalDate duration;
 
 }
