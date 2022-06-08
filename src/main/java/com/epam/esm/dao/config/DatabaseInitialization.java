@@ -22,7 +22,7 @@ public class DatabaseInitialization {
     public void createTable(Class target) {
         Field[] allFields = target.getDeclaredFields();
         List<Field> fields = new ArrayList<>(Arrays.asList(allFields));
-        String name = "tb_" + Character.toLowerCase(target.getSimpleName().charAt(0)) + target.getSimpleName().substring(1);
+        String name = "tb_" + target.getSimpleName().toLowerCase().replace("entity", "");
         StringBuilder query = new StringBuilder("CREATE TABLE IF NOT EXISTS " + name + "(");
         for (Field field : fields) {
             if (Boolean.class.equals(field.getType())) {

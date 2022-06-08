@@ -24,12 +24,19 @@ public class TagDaoImpl implements TagDao {
 
     @Override
     public TagEntity findById(Long aLong) {
-        return null;
+            String sql = "SELECT * FROM tb_giftcertificate WHERE id IN (?);";
+            return jdbcTemplate.query(sql, (rs -> {
+               return TagEntity
+                       .builder()
+                       .id(rs.getLong(1))
+                       .name(rs.getString(2))
+                       .build();
+            }), aLong);
     }
 
     @Override
     public TagEntity save(TagEntity tagEntity) {
-        return null;
+        return ;
     }
 
     @Override
