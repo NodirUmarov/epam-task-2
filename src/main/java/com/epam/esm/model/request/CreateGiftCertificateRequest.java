@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.Set;
 
 @Data
@@ -15,7 +14,7 @@ import java.util.Set;
 public class CreateGiftCertificateRequest {
     String name;
     BigDecimal price;
-    LocalDate duration;
+    Long duration;
     String description;
-    Set<String> tags;
+    Set<CreateTagRequest> tags;
 }

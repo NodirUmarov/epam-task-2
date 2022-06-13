@@ -3,16 +3,18 @@ package com.epam.esm.config;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.*;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import javax.sql.DataSource;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+@EnableWebMvc
 @Configuration
+@ComponentScan("com.epam.esm")
 @PropertySource("classpath:application.properties")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class SpringJdbcConfig {
@@ -41,6 +43,8 @@ public class SpringJdbcConfig {
         dataSource.setUsername(username);
         dataSource.setSchema(schema);
         dataSource.setPassword(password);
+        var logger = dataSource.getParentLogger();
+        logger.setLevel(Level.ALL);
         return dataSource;
     }
 
@@ -48,4 +52,5 @@ public class SpringJdbcConfig {
     public JdbcTemplate getJdbcTemplate(DataSource dataSource) {
         return new JdbcTemplate(dataSource);
     }
+
 }

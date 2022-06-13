@@ -6,6 +6,8 @@ import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -19,6 +21,7 @@ public class GiftCertificateEntity extends BaseEntityAudit<Long> {
     String name;
     String description;
     BigDecimal price;
-    LocalDate duration;
+    LocalDateTime duration;
+    Set<TagEntity> tags;
 
 }
