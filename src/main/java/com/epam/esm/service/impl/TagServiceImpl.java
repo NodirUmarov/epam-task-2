@@ -39,4 +39,8 @@ public class TagServiceImpl implements TagService {
         return INSTANCE.toDtoSet(tagDao.findAllSorted(quantity, page - 1));
     }
 
+    @Override
+    public void deleteById(Long id) {
+        tagDao.deleteById(id);
+    }
 }

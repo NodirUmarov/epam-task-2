@@ -1,7 +1,8 @@
 package com.epam.esm.aop;
 
 import com.epam.esm.exception.EntityNotFoundException;
-import com.epam.esm.model.response.EndPointErrorResponse;
+import com.epam.esm.exception.OperationDeniedException;
+import com.epam.esm.model.log.EndPointErrorResponse;
 import lombok.NonNull;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
@@ -27,19 +28,14 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return buildResponseEntity(generateApiError(ex, errorMessage, HttpStatus.BAD_REQUEST));
     }
 
-//    @ExceptionHandler(RuntimeException.class)
-//    protected ResponseEntity<Object> handleRuntimeFound(RuntimeException ex) {
-//        return buildResponseEntity(generateApiError(ex, HttpStatus.INTERNAL_SERVER_ERROR));
-//    }
-
-//    @ExceptionHandler(NullPointerException.class)
-//    protected ResponseEntity<Object> handleNullPointer(Exception ex) {
-//        return buildResponseEntity(generateApiError(ex, HttpStatus.INTERNAL_SERVER_ERROR));
-//    }
-
     @ExceptionHandler(EntityNotFoundException.class)
     protected ResponseEntity<Object> handleEntityNotFound(EntityNotFoundException ex) {
         return buildResponseEntity(generateApiError(ex, HttpStatus.NOT_FOUND));
+    }
+
+    @ExceptionHandler(OperationDeniedException.class)
+    protected ResponseEntity<Object> handleOperationDenied(OperationDeniedException ex) {
+        return buildResponseEntity(generateApiError(ex, HttpStatus.NOT_ACCEPTABLE));
     }
 
     private ResponseEntity<Object> buildResponseEntity(EndPointErrorResponse apiErrorModel) {

@@ -1,10 +1,14 @@
 package com.epam.esm.dao.impl;
 
 import com.epam.esm.dao.GiftCertificateDao;
-import com.epam.esm.dao.rowmapperimpl.GiftCertificateRowMapper;
+import com.epam.esm.dao.extractor.GiftCertificateResultSetExtractor;
+import com.epam.esm.dao.rowmapper.GiftCertificateRowMapper;
+import com.epam.esm.exception.EntityNotFoundException;
 import com.epam.esm.model.entity.GiftCertificateEntity;
 import com.epam.esm.model.entity.TagEntity;
 import com.epam.esm.model.enums.SortType;
+import com.epam.esm.model.request.CreateGiftCertificateRequest;
+import com.epam.esm.model.request.UpdateGiftCertificateRequest;
 import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +25,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Repository
 @RequiredArgsConstructor
@@ -38,7 +41,7 @@ public class GiftCertificateDaoImpl implements GiftCertificateDao {
                 "JOIN tb_tags t on gcht.tag_id = t.id " +
                 "WHERE gc.id IN (?)";
         return jdbcTemplate
-                .query(sql, new GiftCertificateRowMapper(), id)
+                .query(sql, new GiftCertificateResultSetExtractor(), id)
                 .stream()
                 .findFirst();
     }
@@ -84,9 +87,11 @@ public class GiftCertificateDaoImpl implements GiftCertificateDao {
     }
 
     @Override
-    public void delete(Long id) {
+    public void deleteById(Long id) {
+        String cascadeDelete = "DELETE FROM gift_cetificate_has_tag WHERE gift_cetificate_id = ?";
         String sql = "DELETE FROM tb_gift_cetificates WHERE id = ?";
-        jdbcTemplate.update(sql);
+        jdbcTemplate.update(cascadeDelete, id);
+        jdbcTemplate.update(sql, id);
     }
 
     @Override
@@ -96,8 +101,9 @@ public class GiftCertificateDaoImpl implements GiftCertificateDao {
                 "JOIN gift_cetificate_has_tag gcht on gc.id = gcht.gift_cetificate_id " +
                 "JOIN tb_tags t on gcht.tag_id = t.id " +
                 "WHERE gc.name IN (?)";
+
         return jdbcTemplate
-                .query(sql, new GiftCertificateRowMapper(), name)
+                .query(sql, new GiftCertificateResultSetExtractor(), name)
                 .stream()
                 .findFirst();
     }
@@ -114,7 +120,56 @@ public class GiftCertificateDaoImpl implements GiftCertificateDao {
                 "LIMIT (?) " +
                 "OFFSET (?);";
         return jdbcTemplate.query(sql,
-                new GiftCertificateRowMapper(),
-                tag, tag, limit, offset);
+                new GiftCertificateResultSetExtractor(),
+                tag, limit, offset);
+    }
+
+    @Override
+    public GiftCertificateEntity update(Long id, UpdateGiftCertificateRequest request) {
+        String sql = "" +
+                "UPDATE tb_gift_cetificates " +
+                "SET ";
+
+        if (request.getName() != null) {
+            sql += "name = ?, ";
+        }
+        if (request.getDuration() != null) {
+            sql += "duration = create_date + (duration - tb_gift_cetificates.create_date - INTERVAL '? DAY'), ";
+        }
+        if (request.getPrice() != null) {
+            sql += "price = ?, ";
+        }
+        if (request.getDescription() != null) {
+            sql += "description = ?, ";
+        }
+
+        sql += "last_update_date = NOW(), " +
+                "WHERE id = ?;";
+
+        int result = jdbcTemplate
+                .update(sql,
+                        request.getName(),
+                        request.getPrice(),
+                        request.getDescription(),
+                        request.getDuration(),
+                        id);
+        if (result == 0) {
+            throw new EntityNotFoundException("No entity found to update with id = " + id);
+        }
+
+        sql = "SELECT * FROM tb_gift_cetificates WHERE id = ?";
+        return jdbcTemplate
+                .query(sql, new GiftCertificateRowMapper(), id)
+                .get(0);
+    }
+
+    public boolean existsById(Long id) {
+        String sql = "SELECT EXISTS(SELECT * FROM tb_gift_cetificates WHERE id IN (?))";
+        return jdbcTemplate.queryForObject(sql, Boolean.class, id);
+    }
+
+    public void updateColumn(Long id, String columnName, String value) {
+        String sql = "UPDATE tb_gift_cetificates SET ? = ? WHERE id = ?";
+        jdbcTemplate.update(sql, columnName, value, id);
     }
 }

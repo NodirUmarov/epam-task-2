@@ -9,6 +9,7 @@ import com.epam.esm.model.dto.TagDto;
 import com.epam.esm.model.entity.GiftCertificateEntity;
 import com.epam.esm.model.enums.SortType;
 import com.epam.esm.model.request.CreateGiftCertificateRequest;
+import com.epam.esm.model.request.UpdateGiftCertificateRequest;
 import com.epam.esm.service.GiftCertificateService;
 import com.epam.esm.service.TagService;
 import lombok.AccessLevel;
@@ -17,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
@@ -61,5 +63,17 @@ public class GiftCertificateServiceImpl implements GiftCertificateService {
         return INSTANCE
                 .toDtoList(giftCertificateDao
                         .findByTag(tag, quantity, page - 1, sortType));
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        giftCertificateDao.deleteById(id);
+    }
+
+    @Override
+    public GiftCertificateDto update(Long id, UpdateGiftCertificateRequest request) {
+        return INSTANCE
+                .toDto(giftCertificateDao
+                        .update(id, request));
     }
 }

@@ -11,4 +11,6 @@ public interface TagService {
     Set<TagDto> create(Set<CreateTagRequest> tags);
 
     Set<TagDto> getAllTags(Integer quantity, Integer page);
+
+    void deleteById(Long id);
 }

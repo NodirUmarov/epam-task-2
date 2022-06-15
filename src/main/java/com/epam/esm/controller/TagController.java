@@ -23,11 +23,22 @@ public class TagController {
     @GetMapping("/get-tags")
     public ResponseEntity<?> getTag(@RequestParam Integer quantity,
                                     @RequestParam Integer page) {
-        return ResponseEntity.ok(tagService.getAllTags(quantity, page));
+        return ResponseEntity
+                .ok(tagService.getAllTags(quantity, page));
     }
 
-    @PostMapping(value = "/create")
+    @PostMapping("/create")
     public ResponseEntity<?> create(@RequestBody Set<CreateTagRequest> createTagRequest) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(tagService.create(createTagRequest));
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(tagService.create(createTagRequest));
+    }
+
+    @DeleteMapping("/delete-by-id/{id}")
+    public ResponseEntity<?> deleteById(@PathVariable Long id) {
+        tagService.deleteById(id);
+        return ResponseEntity
+                .noContent()
+                .build();
     }
 }

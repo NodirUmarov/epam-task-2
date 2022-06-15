@@ -1,7 +1,10 @@
 package com.epam.esm.dao.impl;
 
 import com.epam.esm.dao.TagDao;
-import com.epam.esm.dao.rowmapperimpl.TagRowMapper;
+import com.epam.esm.dao.extractor.GiftCertificateResultSetExtractor;
+import com.epam.esm.dao.rowmapper.TagRowMapper;
+import com.epam.esm.exception.OperationDeniedException;
+import com.epam.esm.model.entity.GiftCertificateEntity;
 import com.epam.esm.model.entity.TagEntity;
 import lombok.AccessLevel;
 import lombok.NonNull;
@@ -11,6 +14,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -41,9 +45,32 @@ public class TagDaoImpl implements TagDao {
     }
 
     @Override
-    public void delete(Long id) {
+    public void deleteById(Long id) {
+        checkBeforeDelete(id);
         String sql = "DELETE FROM tb_tags WHERE id = ?";
-        jdbcTemplate.update(sql);
+        jdbcTemplate.update(sql, id);
+    }
+
+    private void checkBeforeDelete(Long id) {
+        String checkUsing = "" +
+                "SELECT * FROM tb_gift_cetificates gc " +
+                "JOIN gift_cetificate_has_tag gcht on gc.id = gcht.gift_cetificate_id " +
+                "JOIN tb_tags tt on gcht.tag_id = tt.id " +
+                "WHERE tt.id = ?";
+        List<GiftCertificateEntity> giftCertificates = jdbcTemplate.query(checkUsing, new GiftCertificateResultSetExtractor(), id);
+        if (!giftCertificates.isEmpty()) {
+            StringBuilder errorMessage = new StringBuilder(
+                    "Tag with id " + id +
+                            " is using by " + giftCertificates.size() + " certificates. " +
+                            "Untag certificates below first: ");
+
+            giftCertificates.forEach(giftCertificate -> {
+                errorMessage.append(giftCertificate.getName()).append(", ");
+            });
+            errorMessage.replace(errorMessage.lastIndexOf(","), errorMessage.length(), "");
+            errorMessage.append(".");
+            throw new OperationDeniedException(errorMessage.toString());
+        }
     }
 
     @Override
