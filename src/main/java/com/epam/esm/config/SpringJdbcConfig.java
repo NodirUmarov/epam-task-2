@@ -10,7 +10,6 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import javax.sql.DataSource;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 @EnableWebMvc
 @Configuration

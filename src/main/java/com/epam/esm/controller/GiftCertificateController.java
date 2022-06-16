@@ -18,7 +18,7 @@ import java.math.BigDecimal;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/gift-certificate")
+@RequestMapping("/api/v1/gift-certificates") // plural
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class GiftCertificateController {
 

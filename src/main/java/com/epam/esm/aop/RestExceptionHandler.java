@@ -24,7 +24,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
                                                                            @NonNull HttpHeaders headers,
                                                                            @NonNull HttpStatus status,
                                                                            @NonNull WebRequest request) {
-        String errorMessage = "Malformed JSON request";
+        String errorMessage = "Malformed JSON request"; // constant class
         return buildResponseEntity(generateApiError(ex, errorMessage, HttpStatus.BAD_REQUEST));
     }
 

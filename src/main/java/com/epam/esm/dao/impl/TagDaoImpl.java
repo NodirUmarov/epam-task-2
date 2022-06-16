@@ -56,7 +56,7 @@ public class TagDaoImpl implements TagDao {
                 "SELECT * FROM tb_gift_cetificates gc " +
                 "JOIN gift_cetificate_has_tag gcht on gc.id = gcht.gift_cetificate_id " +
                 "JOIN tb_tags tt on gcht.tag_id = tt.id " +
-                "WHERE tt.id = ?";
+                "WHERE tt.id = ?"; // constant
         List<GiftCertificateEntity> giftCertificates = jdbcTemplate.query(checkUsing, new GiftCertificateResultSetExtractor(), id);
         if (!giftCertificates.isEmpty()) {
             StringBuilder errorMessage = new StringBuilder(
