@@ -12,6 +12,8 @@ repositories {
 }
 
 dependencies {
+    testImplementation "com.h2database:h2-mvstore:2.1.212"
+    testImplementation "org.springframework:spring-test:$springVersion"
     testImplementation "org.junit.jupiter:junit-jupiter-api:$testVersion"
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$testVersion"
 

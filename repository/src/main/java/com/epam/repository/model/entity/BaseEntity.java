@@ -1,7 +1,6 @@
 package com.epam.repository.model.entity;
 
 import lombok.*;
-import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
 
 @Getter
