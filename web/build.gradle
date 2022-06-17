@@ -1,0 +1,38 @@
+plugins {
+    id 'java'
+    id 'war'
+}
+
+group 'com.epam'
+version '0.1.0'
+
+repositories {
+    mavenLocal()
+    maven { url "https://repo.spring.io/release" }
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation "org.junit.jupiter:junit-jupiter-api:$testVersion"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$testVersion"
+
+    implementation "org.springframework:spring-webmvc:$springVersion"
+    implementation "org.springframework:spring-context:$springVersion"
+
+    testCompileOnly "org.projectlombok:lombok:$lombokVersion"
+    compileOnly "org.projectlombok:lombok:$lombokVersion"
+    testAnnotationProcessor "org.projectlombok:lombok:$lombokVersion"
+    annotationProcessor "org.projectlombok:lombok:$lombokVersion"
+
+    implementation "com.fasterxml.jackson.core:jackson-core:$jacksonVersion"
+    implementation "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion"
+    implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jacksonVersion"
+}
+
+war {
+    enabled = true
+}
+
+test {
+    useJUnitPlatform()
+}
