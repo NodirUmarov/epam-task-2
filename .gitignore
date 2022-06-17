@@ -17,9 +17,8 @@ gradle-app.setting
 
 # Idea specific modules
 .idea
-.run
 
 # Propertiest config
-**/.env
+repository/src/main/resources/.env
 
 
