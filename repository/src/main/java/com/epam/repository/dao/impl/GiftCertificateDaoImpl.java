@@ -190,6 +190,7 @@ public class GiftCertificateDaoImpl implements GiftCertificateDao {
                 giftCertificateResultSetExtractor);
     }
 
+    @Override
     public boolean existsById(Long id) throws IllegalArgumentException {
         checkForNull(id);
         return Boolean.TRUE.equals(namedParameterJdbcTemplate.queryForObject(SELECT_EXISTS,

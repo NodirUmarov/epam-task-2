@@ -43,5 +43,4 @@ public class SpringJdbcConfig {
     public NamedParameterJdbcTemplate getNamedParameterJdbcTemplate(DataSource dataSource) {
         return new NamedParameterJdbcTemplate(dataSource);
     }
-
 }
