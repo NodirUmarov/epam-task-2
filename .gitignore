@@ -20,5 +20,6 @@ gradle-app.setting
 
 # Propertiest config
 repository/src/main/resources/.env
+repository/src/test/resources/.env
 
 
