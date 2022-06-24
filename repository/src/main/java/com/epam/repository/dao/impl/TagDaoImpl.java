@@ -8,9 +8,12 @@ import com.epam.repository.model.exception.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -31,7 +34,7 @@ public class TagDaoImpl implements TagDao {
 
     private final String EXISTS_BY_NAME = "SELECT EXISTS(SELECT * FROM tb_tags WHERE name IN (:name))";
 
-    private final String INSERT_RETURN_ID = "INSERT INTO tb_tags VALUES (:name) RETURNING id;";
+    private final String INSERT = "INSERT INTO tb_tags(name) VALUES (:name);";
 
     private final String DELETE_BY_ID = "DELETE FROM tb_tags WHERE id IN (:id);";
 
@@ -64,10 +67,10 @@ public class TagDaoImpl implements TagDao {
     public TagEntity save(TagEntity tagEntity) throws IllegalArgumentException {
         checkForNull(tagEntity);
         checkForDuplicates(tagEntity);
-        namedParameterJdbcTemplate.query(INSERT_RETURN_ID, new MapSqlParameterSource("name", tagEntity.getName()),
-                rs -> {
-                    tagEntity.setId(rs.getLong(1));
-                });
+        KeyHolder holder = new GeneratedKeyHolder();
+        namedParameterJdbcTemplate.update(INSERT,
+                new MapSqlParameterSource("name", tagEntity.getName()), holder, new String[]{"id" });
+        tagEntity.setId(Objects.requireNonNull(holder.getKey()).longValue());
         return tagEntity;
     }
 
@@ -91,10 +94,7 @@ public class TagDaoImpl implements TagDao {
                 .map(tagEntity -> namedParameterJdbcTemplate.query(SELECT_BY_NAME,
                                 new MapSqlParameterSource("name", tagEntity.getName()), tagRowMapper).stream().findFirst()
                         .orElseGet(() -> {
-                            namedParameterJdbcTemplate.query(INSERT_RETURN_ID, new MapSqlParameterSource("name", tagEntity.getName()),
-                                    rs -> {
-                                        tagEntity.setId(rs.getLong(1));
-                                    });
+                            save(tagEntity);
                             return tagEntity;
                         }))
                 .collect(Collectors.toSet());

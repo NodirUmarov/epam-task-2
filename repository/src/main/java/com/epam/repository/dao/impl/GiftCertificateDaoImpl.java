@@ -9,6 +9,8 @@ import com.epam.repository.model.exception.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,14 +29,13 @@ public class GiftCertificateDaoImpl implements GiftCertificateDao {
 
     private final String SELECT_BY_ID = "" +
             "SELECT * FROM tb_gift_certificates gc " +
-            "JOIN gift_certificate_has_tag gcht ON gc.id = gcht.gift_certificate_id " +
-            "JOIN tb_tags t ON gcht.tag_id = t.id " +
+            "LEFT JOIN gift_certificate_has_tag gcht ON gc.id = gcht.gift_certificate_id OR gcht.gift_certificate_id IS NULL " +
+            "LEFT JOIN tb_tags t ON gcht.tag_id = t.id " +
             "WHERE gc.id IN (:id)";
 
-    private final String INSERT_RETURN_ID = "" +
+    private final String INSERT = "" +
             "INSERT INTO tb_gift_certificates(name, price, duration, description, create_date) " +
-            "VALUES (:name, :price, :duration, :description, :createDate) " +
-            "RETURNING id;";
+            "VALUES (:name, :price, :duration, :description, :createDate);";
 
     private final String INSERT_JT = "" +
             "INSERT INTO gift_certificate_has_tag " +
@@ -46,21 +47,21 @@ public class GiftCertificateDaoImpl implements GiftCertificateDao {
 
     private final String SELECT_BY_NAME = "" +
             "SELECT * FROM tb_gift_certificates gc " +
-            "JOIN gift_certificate_has_tag gcht on gc.id = gcht.gift_certificate_id " +
-            "JOIN tb_tags t on gcht.tag_id = t.id " +
-            "WHERE gc.name IN :name";
+            "LEFT JOIN gift_certificate_has_tag gcht on gc.id = gcht.gift_certificate_id " +
+            "LEFT JOIN tb_tags t on gcht.tag_id = t.id " +
+            "WHERE gc.name IN (:name)";
 
     private String order = SortType.NONE.getValue();
     private final String SELECT_BY_NAME_ORD = "" +
             "SELECT * FROM tb_gift_certificates gc " +
             "JOIN gift_certificate_has_tag gcht on gc.id = gcht.gift_certificate_id " +
             "JOIN tb_tags t on gcht.tag_id = t.id " +
-            "WHERE t.name IN :tagName " +
+            "WHERE t.name IN (:tagName) " +
             "ORDER BY (gc.name, t.name) " + order + " " +
             "LIMIT :limit " +
             "OFFSET :offset;";
 
-    private final String SELECT_EXISTS = "SELECT EXISTS(SELECT * FROM tb_gift_certificates WHERE id IN (?))";
+    private final String SELECT_EXISTS = "SELECT EXISTS(SELECT * FROM tb_gift_certificates WHERE id IN (:id));";
 
     private final String UPDATE_BY_ID = "" +
             "UPDATE tb_gift_certificates " +
@@ -106,7 +107,7 @@ public class GiftCertificateDaoImpl implements GiftCertificateDao {
                 throw new NullPointerException();
             }
             return entity;
-        } catch (NullPointerException ex) {
+        } catch (NullPointerException | IndexOutOfBoundsException ex) {
             throw new EntityNotFoundException();
         }
     }
@@ -115,7 +116,7 @@ public class GiftCertificateDaoImpl implements GiftCertificateDao {
     @Transactional
     public GiftCertificateEntity save(GiftCertificateEntity giftCertificateEntity) throws IllegalArgumentException {
         checkForNull(giftCertificateEntity);
-        if (existsById(giftCertificateEntity.getId())) {
+        if (giftCertificateEntity.getId() != null && existsById(giftCertificateEntity.getId())) {
             return update(giftCertificateEntity);
         } else {
             return saveNew(giftCertificateEntity);
@@ -123,17 +124,17 @@ public class GiftCertificateDaoImpl implements GiftCertificateDao {
     }
 
     private GiftCertificateEntity saveNew(GiftCertificateEntity giftCertificateEntity) {
+        KeyHolder holder = new GeneratedKeyHolder();
         giftCertificateEntity.setCreateDate(LocalDateTime.now());
-        namedParameterJdbcTemplate.query(INSERT_RETURN_ID, new MapSqlParameterSource()
+        namedParameterJdbcTemplate.update(INSERT, new MapSqlParameterSource()
                         .addValue("name", giftCertificateEntity.getName())
                         .addValue("price", giftCertificateEntity.getPrice())
                         .addValue("duration", giftCertificateEntity.getDuration())
                         .addValue("description", giftCertificateEntity.getDescription())
                         .addValue("createDate", giftCertificateEntity.getCreateDate()),
-                rs -> {
-                    giftCertificateEntity.setId(rs.getLong(1));
-                });
-
+                holder,
+                new String[]{"id" });
+        giftCertificateEntity.setId(Objects.requireNonNull(holder.getKey()).longValue());
         saveToJunctionTable(giftCertificateEntity, giftCertificateEntity.getTags());
 
         return giftCertificateEntity;
@@ -194,7 +195,7 @@ public class GiftCertificateDaoImpl implements GiftCertificateDao {
     public boolean existsById(Long id) throws IllegalArgumentException {
         checkForNull(id);
         return Boolean.TRUE.equals(namedParameterJdbcTemplate.queryForObject(SELECT_EXISTS,
-                new MapSqlParameterSource("id", id), (rs, rowNum) -> rs.getBoolean(0)));
+                new MapSqlParameterSource("id", id), (rs, rowNum) -> rs.getBoolean(1)));
     }
 
     @Override

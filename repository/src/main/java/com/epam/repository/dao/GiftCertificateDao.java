@@ -32,7 +32,7 @@ import java.util.Set;
 public interface GiftCertificateDao extends BaseDao<Long, GiftCertificateEntity> {
 
     /**
-     * <p>Retrieves an entity wrapped in Optional by its id.</p>
+     * <p>Retrieves an entity wrapped in Optional by its name.</p>
      *
      * @param name must not be null
      * @return {@link com.epam.repository.model.entity.GiftCertificateEntity} with given id wrapped in {@link java.util.Optional} or {@link Optional#empty()} if none found

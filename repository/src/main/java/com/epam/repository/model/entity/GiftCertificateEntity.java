@@ -1,6 +1,9 @@
 package com.epam.repository.model.entity;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
@@ -20,4 +23,21 @@ public class GiftCertificateEntity extends BaseEntityAudit<Long> {
     private LocalDateTime duration;
     private Set<TagEntity> tags;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (!(o instanceof GiftCertificateEntity))
+            return false;
+
+        GiftCertificateEntity other = (GiftCertificateEntity) o;
+
+        return getId() != null &&
+                getId().equals(other.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }
