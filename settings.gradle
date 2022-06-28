@@ -1,4 +1,4 @@
 rootProject.name = 'esm'
-include 'service'
-include 'web'
-include 'repository'
+include 'data'
+include 'api'
+include 'business'
