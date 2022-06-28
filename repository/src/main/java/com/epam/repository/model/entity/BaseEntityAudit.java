@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public abstract class BaseEntityAudit<ID> extends BaseEntity<ID> {
 
-    LocalDateTime createDate;
-    LocalDateTime lastUpdateDate;
+    protected LocalDateTime createDate;
+    protected LocalDateTime lastUpdateDate;
 
 }

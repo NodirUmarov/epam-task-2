@@ -13,7 +13,8 @@ CREATE TABLE tb_gift_certificates
     last_update_date TIMESTAMP,
 
     CONSTRAINT pk_gift_certificate_id PRIMARY KEY (id),
-    CONSTRAINT unique_certificate_id UNIQUE (id)
+    CONSTRAINT unique_certificate_id UNIQUE (id),
+    CONSTRAINT unique_certificate_name UNIQUE (name)
 );
 
 CREATE TABLE tb_tags

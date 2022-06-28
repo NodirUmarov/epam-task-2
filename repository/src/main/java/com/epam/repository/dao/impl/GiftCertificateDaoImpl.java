@@ -41,9 +41,9 @@ public class GiftCertificateDaoImpl implements GiftCertificateDao {
             "INSERT INTO gift_certificate_has_tag " +
             "VALUES (:certificateId, :tagId);";
 
-    private final String DELETE_BY_ID_JT = "DELETE FROM gift_certificate_has_tag WHERE gift_certificate_id IN :certificateId";
+    private final String DELETE_BY_ID_JT = "DELETE FROM gift_certificate_has_tag WHERE gift_certificate_id IN (:certificateId)";
 
-    private final String DELETE_BY_ID = "DELETE FROM tb_gift_certificates WHERE id IN :id";
+    private final String DELETE_BY_ID = "DELETE FROM tb_gift_certificates WHERE id IN (:id)";
 
     private final String SELECT_BY_NAME = "" +
             "SELECT * FROM tb_gift_certificates gc " +
@@ -65,12 +65,12 @@ public class GiftCertificateDaoImpl implements GiftCertificateDao {
 
     private final String UPDATE_BY_ID = "" +
             "UPDATE tb_gift_certificates " +
-            "SET name = (CASE WHEN name <> :name THEN :name ELSE name END), " +
-            "description = (CASE WHEN description <> :description THEN :description ELSE description END), " +
-            "duration = (CASE WHEN duration <> :duration THEN :duration ELSE duration END), " +
-            "price = (CASE WHEN price <> :price THEN :price ELSE price END), " +
-            "last_update_date = :updateDate " +
-            "WHERE id = :id ";
+            "SET name = (CASE WHEN name <> (:name) THEN (:name) ELSE name END), " +
+            "description = (CASE WHEN description <> (:description) THEN (:description) ELSE description END), " +
+            "duration = (CASE WHEN duration <> (:duration) THEN (:duration) ELSE duration END), " +
+            "price = (CASE WHEN price <> (:price) THEN (:price) ELSE price END), " +
+            "last_update_date = (:updateDate) " +
+            "WHERE id IN (:id) ";
 
     private final String UNTAG_CERTIFICATE = "" +
             "DELETE FROM gift_certificate_has_tag " +
@@ -92,7 +92,7 @@ public class GiftCertificateDaoImpl implements GiftCertificateDao {
     @Override
     public Optional<GiftCertificateEntity> findById(Long id) throws IllegalArgumentException {
         checkForNull(id);
-        return namedParameterJdbcTemplate.query(SELECT_BY_ID, new MapSqlParameterSource("id", id), giftCertificateResultSetExtractor)
+        return Objects.requireNonNull(namedParameterJdbcTemplate.query(SELECT_BY_ID, new MapSqlParameterSource("id", id), giftCertificateResultSetExtractor))
                 .stream()
                 .findFirst();
     }
@@ -101,12 +101,8 @@ public class GiftCertificateDaoImpl implements GiftCertificateDao {
     public GiftCertificateEntity getById(Long id) throws IllegalArgumentException, EntityNotFoundException {
         checkForNull(id);
         try {
-            GiftCertificateEntity entity = namedParameterJdbcTemplate.query(SELECT_BY_ID,
-                    new MapSqlParameterSource("id", id), giftCertificateResultSetExtractor).get(0);
-            if (entity == null) {
-                throw new NullPointerException();
-            }
-            return entity;
+            return Objects.requireNonNull(namedParameterJdbcTemplate.query(SELECT_BY_ID,
+                    new MapSqlParameterSource("id", id), giftCertificateResultSetExtractor)).get(0);
         } catch (NullPointerException | IndexOutOfBoundsException ex) {
             throw new EntityNotFoundException();
         }
@@ -125,7 +121,6 @@ public class GiftCertificateDaoImpl implements GiftCertificateDao {
 
     private GiftCertificateEntity saveNew(GiftCertificateEntity giftCertificateEntity) {
         KeyHolder holder = new GeneratedKeyHolder();
-        giftCertificateEntity.setCreateDate(LocalDateTime.now());
         namedParameterJdbcTemplate.update(INSERT, new MapSqlParameterSource()
                         .addValue("name", giftCertificateEntity.getName())
                         .addValue("price", giftCertificateEntity.getPrice())
@@ -137,7 +132,7 @@ public class GiftCertificateDaoImpl implements GiftCertificateDao {
         giftCertificateEntity.setId(Objects.requireNonNull(holder.getKey()).longValue());
         saveToJunctionTable(giftCertificateEntity, giftCertificateEntity.getTags());
 
-        return giftCertificateEntity;
+        return getById(giftCertificateEntity.getId());
     }
 
     private void saveToJunctionTable(GiftCertificateEntity giftCertificateEntity, Set<TagEntity> tagEntities) {
@@ -174,8 +169,8 @@ public class GiftCertificateDaoImpl implements GiftCertificateDao {
     @Override
     public Optional<GiftCertificateEntity> findByName(String name) throws IllegalArgumentException {
         checkForNull(name);
-        return namedParameterJdbcTemplate
-                .query(SELECT_BY_NAME, new MapSqlParameterSource("name", name), giftCertificateResultSetExtractor)
+        return Objects.requireNonNull(namedParameterJdbcTemplate
+                        .query(SELECT_BY_NAME, new MapSqlParameterSource("name", name), giftCertificateResultSetExtractor))
                 .stream()
                 .findFirst();
     }

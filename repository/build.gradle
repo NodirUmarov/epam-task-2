@@ -18,8 +18,8 @@ dependencies {
     testImplementation "org.springframework:spring-test:$springVersion"
     testImplementation "org.junit.jupiter:junit-jupiter-api:$testVersion"
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$testVersion"
+    testImplementation "org.assertj:assertj-core:3.23.1";
     testImplementation "org.junit.jupiter:junit-jupiter-params:$testVersion"
-
     implementation "org.springframework:spring-context:$springVersion"
     implementation "org.springframework:spring-jdbc:$springVersion"
 

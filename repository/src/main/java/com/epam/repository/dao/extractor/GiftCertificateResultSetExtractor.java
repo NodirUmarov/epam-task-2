@@ -28,7 +28,7 @@ import java.util.Set;
  * <p>This class is mainly used within the JDBC framework itself.
  * A {@link com.epam.repository.dao.rowmapper.GiftCertificateRowMapper} is usually a simpler choice for ResultSet processing,
  * mapping one result object per row instead of one result object for
- * the entire ResultSet.
+ * the entire ResultSet.</p>
  *
  * <p>Configured to map values of {@link GiftCertificateEntity} instance.</p>
  *
@@ -41,6 +41,7 @@ import java.util.Set;
  * @see RowCallbackHandler
  * @see RowMapper
  * @see org.springframework.jdbc.core.support.AbstractLobStreamingResultSetExtractor
+ * {@inheritDoc}
  */
 
 @Component

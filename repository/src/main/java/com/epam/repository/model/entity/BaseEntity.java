@@ -9,6 +9,6 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 public abstract class BaseEntity<ID> {
-    private ID id;
+    protected ID id;
 }
 

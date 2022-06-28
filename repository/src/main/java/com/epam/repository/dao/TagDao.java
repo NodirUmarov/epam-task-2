@@ -42,4 +42,15 @@ public interface TagDao extends BaseDao<Long, TagEntity> {
      */
     Set<TagEntity> findAllSorted(Integer limit, Integer offset) throws IllegalArgumentException;
 
+
+    /**
+     * <p>Returns whether a tag with the given name exists</p>
+     *
+     *
+     * @param name must not be null
+     * @return {@code true} if an entity with the given name exists, {@code false} otherwise
+     * @throws IllegalArgumentException if name is null
+     * @since 0.1.0
+     */
+    boolean existsByName(String name);
 }

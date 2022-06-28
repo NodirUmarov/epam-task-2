@@ -43,6 +43,9 @@ public class TagDaoImpl implements TagDao {
 
     @SafeVarargs
     private <T> void checkForNull(T... object) {
+        if (object == null) {
+            throw new IllegalArgumentException();
+        }
         for (T t : object) {
             if (t == null) {
                 throw new IllegalArgumentException();
@@ -88,6 +91,7 @@ public class TagDaoImpl implements TagDao {
 
     @Override
     public Set<TagEntity> saveAll(Set<TagEntity> tags) {
+        checkForNull(tags);
         checkForNull(tags.toArray());
 
         return tags.stream()
@@ -117,7 +121,7 @@ public class TagDaoImpl implements TagDao {
                 throw new NullPointerException();
             }
             return entity;
-        } catch (NullPointerException ex) {
+        } catch (NullPointerException | IndexOutOfBoundsException ex) {
             throw new EntityNotFoundException();
         }
     }
