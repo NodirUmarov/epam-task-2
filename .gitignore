@@ -19,7 +19,6 @@ gradle-app.setting
 .idea
 
 # Propertiest config
-repository/src/main/resources/.env
-repository/src/test/resources/.env
+**/.env
 
 
