@@ -1,6 +1,6 @@
 package com.epam.data.dao;
 
-import com.epam.data.config.SpringJdbcConfig;
+import com.epam.data.config.DataConfig;
 import com.epam.data.dao.provider.CollectorUtils;
 import com.epam.data.dao.provider.GiftCertificateProvider;
 import com.epam.data.model.entity.GiftCertificateEntity;
@@ -38,7 +38,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 /**
  * @author <a href="https://github.com/NodirUmarov">Nodir Umarov</a> on 6/21/2022
  */
-@ContextConfiguration(classes = SpringJdbcConfig.class)
+@ContextConfiguration(classes = DataConfig.class)
 @TestPropertySource(properties = "classpath:application.properties", locations = "classpath:.env")
 @ExtendWith(SpringExtension.class)
 class GiftCertificateDaoTest {

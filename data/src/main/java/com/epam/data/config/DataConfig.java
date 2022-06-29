@@ -10,7 +10,7 @@ import javax.sql.DataSource;
 @Configuration
 @ComponentScan("com.epam.data")
 @PropertySource("classpath:application.properties")
-public class SpringJdbcConfig {
+public class DataConfig {
 
     @Value("${spring.datasource.driver}")
     private String driver;
