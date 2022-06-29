@@ -19,5 +19,4 @@ public class GiftCertificateDto implements Serializable {
     private final BigDecimal price;
     private final LocalDateTime duration;
     private final Set<TagDto> tags;
-
 }

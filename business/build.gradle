@@ -6,5 +6,8 @@ dependencies {
     implementation project(':data')
 
     testImplementation "org.mockito:mockito-core:4.6.1"
-    testImplementation "org.assertj:assertj-core:3.23.1";
+    testImplementation "org.assertj:assertj-core:3.23.1"
+
+    annotationProcessor "org.mapstruct:mapstruct-processor:$mapstructVersion"
+    implementation "org.mapstruct:mapstruct:$mapstructVersion"
 }
