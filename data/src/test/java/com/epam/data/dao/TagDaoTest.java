@@ -11,7 +11,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Stream;
 import javax.sql.DataSource;
-import org.junit.jupiter.api.Assertions;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -64,21 +64,21 @@ class TagDaoTest {
         Set<TagEntity> saved = tagDao.saveAll(tags);
 
         saved.forEach(tagEntity -> {
-            Assertions.assertNotNull(tagEntity);
-            Assertions.assertNotNull(tagEntity.getId());
+            Assertions.assertThat(tagEntity).isNotNull();
+            Assertions.assertThat(tagEntity.getId()).isNotNull();
         });
 
-        Assertions.assertTrue(saved.containsAll(tags));
+        Assertions.assertThat(saved.containsAll(tags)).isTrue();
 
         Set<TagEntity> entities = tagDao.findAllSorted(150, 0);
-        org.assertj.core.api.Assertions.assertThat(entities).usingRecursiveComparison().isEqualTo(saved);
+        Assertions.assertThat(entities).usingRecursiveComparison().isEqualTo(saved);
     }
 
     @DisplayName("Should not save and throw IllegalArgumentException")
     @ParameterizedTest
     @NullSource
     public void shouldNotSaveAndThrowIllegalArgument(Set<TagEntity> tagEntities) {
-        Assertions.assertThrowsExactly(IllegalArgumentException.class, () -> tagDao.saveAll(tagEntities));
+        Assertions.assertThatIllegalArgumentException().isThrownBy(() -> tagDao.saveAll(tagEntities));
     }
 
     @DisplayName("Should find all tagEntities passed in given range")
@@ -87,23 +87,23 @@ class TagDaoTest {
     public void findAllSorted(Set<TagEntity> tags) {
         Set<TagEntity> saved = tagDao.saveAll(tags);
 
-        saved.forEach(Assertions::assertNotNull);
-        Assertions.assertTrue(saved.containsAll(tags));
+        saved.forEach(tagEntity -> Assertions.assertThat(tagEntity).isNotNull());
+        Assertions.assertThat(saved.containsAll(tags)).isTrue();
 
         Set<TagEntity> firstFifty = tagDao.findAllSorted(saved.size() / 2, 0);
-        Assertions.assertTrue(saved.containsAll(firstFifty));
-        Assertions.assertEquals(saved.size() / 2, firstFifty.size());
+        Assertions.assertThat(saved.containsAll(firstFifty)).isTrue();
+        Assertions.assertThat(saved.size() / 2).isEqualTo(firstFifty.size());
 
         Set<TagEntity> onlyOne = tagDao.findAllSorted(1, saved.size() / 3);
-        Assertions.assertTrue(saved.containsAll(onlyOne));
-        Assertions.assertEquals(1, onlyOne.size());
+        Assertions.assertThat(saved.containsAll(onlyOne)).isTrue();
+        Assertions.assertThat(1).isEqualTo(onlyOne.size());
     }
 
     @DisplayName("Should not find and throw IllegalArgumentException")
     @ParameterizedTest
     @CsvSource(value = {"null, null"}, nullValues = {"null"})
     public void shouldNotFindAndThrowIllegalArgument(Integer limit, Integer offset) {
-        Assertions.assertThrowsExactly(IllegalArgumentException.class, () -> tagDao.findAllSorted(limit, offset));
+        Assertions.assertThatIllegalArgumentException().isThrownBy(() -> tagDao.findAllSorted(limit, offset));
     }
 
     @DisplayName("Should save entity and return with assigned id")
@@ -111,15 +111,15 @@ class TagDaoTest {
     @ArgumentsSource(TagProvider.class)
     public void shouldSaveAndReturn(TagEntity tagEntity) {
         TagEntity saved = tagDao.save(tagEntity);
-        Assertions.assertNotNull(saved.getId());
-        Assertions.assertEquals(tagEntity, saved);
+        Assertions.assertThat(saved.getId()).isNotNull();
+        Assertions.assertThat(tagEntity).isEqualTo(saved);
     }
 
     @DisplayName("Should not save entity and throw IllegalArgument")
     @ParameterizedTest
     @NullSource
     public void shouldNotSaveAndThrowIllegalArgument(TagEntity tagEntity) {
-        Assertions.assertThrowsExactly(IllegalArgumentException.class, () -> tagDao.save(tagEntity));
+        Assertions.assertThatIllegalArgumentException().isThrownBy(() -> tagDao.save(tagEntity));
     }
 
     @DisplayName("Should find tag by id and return it")
@@ -127,15 +127,15 @@ class TagDaoTest {
     @ArgumentsSource(TagProvider.class)
     public void shouldFindEntitiesByIdAndReturn(TagEntity tagEntity) {
         TagEntity saved = tagDao.save(tagEntity);
-        Assertions.assertNotNull(tagEntity);
-        Assertions.assertNotNull(saved);
-        Assertions.assertNotNull(saved.getId());
-        Assertions.assertEquals(saved, tagEntity);
+        Assertions.assertThat(tagEntity).isNotNull();
+        Assertions.assertThat(saved).isNotNull();
+        Assertions.assertThat(saved.getId()).isNotNull();
+        Assertions.assertThat(saved).isEqualTo(tagEntity);
 
         Optional<TagEntity> entity = tagDao.findById(tagEntity.getId());
 
-        org.assertj.core.api.Assertions.assertThatCode(entity::get).doesNotThrowAnyException();
-        org.assertj.core.api.Assertions.assertThat(entity).usingRecursiveComparison().isEqualTo(Optional.of(saved));
+        Assertions.assertThatCode(entity::get).doesNotThrowAnyException();
+        Assertions.assertThat(entity).usingRecursiveComparison().isEqualTo(Optional.of(saved));
     }
 
     @DisplayName("Optional should contain only null element")
@@ -143,14 +143,14 @@ class TagDaoTest {
     @MethodSource("failureCase")
     public void shouldContainOnlyNull(Long id) {
         Optional<TagEntity> entity = tagDao.findById(id);
-        Assertions.assertTrue(entity.isEmpty());
+        Assertions.assertThat(entity.isEmpty()).isTrue();
     }
 
     @DisplayName("Should throw IllegalArgumentException due to null value passed as argument to findById")
     @ParameterizedTest
     @NullSource
     public void shouldNotFindEntityAndThrowIllegalArgumentException(Long id) {
-        Assertions.assertThrowsExactly(IllegalArgumentException.class, () -> tagDao.findById(id));
+        Assertions.assertThatIllegalArgumentException().isThrownBy(() -> tagDao.findById(id));
     }
 
     @DisplayName("Should get tag by id and return it")
@@ -159,20 +159,20 @@ class TagDaoTest {
     public void shouldGetEntitiesByIdAndReturn(TagEntity tagEntity) {
         TagEntity saved = tagDao.save(tagEntity);
 
-        Assertions.assertNotNull(tagEntity);
-        Assertions.assertNotNull(saved);
-        Assertions.assertNotNull(saved.getId());
-        Assertions.assertEquals(saved, tagEntity);
+        Assertions.assertThat(tagEntity).isNotNull();
+        Assertions.assertThat(saved).isNotNull();
+        Assertions.assertThat(saved.getId()).isNotNull();
+        Assertions.assertThat(saved).isEqualTo(tagEntity);
 
         TagEntity entity = tagDao.getById(saved.getId());
-        org.assertj.core.api.Assertions.assertThat(entity).usingRecursiveComparison().isEqualTo(saved);
+        Assertions.assertThat(entity).usingRecursiveComparison().isEqualTo(saved);
     }
 
     @DisplayName("Should throw EntityNotFoundException")
     @ParameterizedTest
     @MethodSource("failureCase")
     public void shouldNotGetEntityThrowEntityNotFoundException(Long id) {
-        Assertions.assertThrowsExactly(EntityNotFoundException.class, () -> tagDao.getById(id));
+        Assertions.assertThatExceptionOfType(EntityNotFoundException.class).isThrownBy(() -> tagDao.getById(id));
     }
 
     @DisplayName("Should get wrong entity")
@@ -180,15 +180,15 @@ class TagDaoTest {
     @ArgumentsSource(TagProvider.class)
     public void shouldGetWrongEntity(TagEntity tagEntity) {
         TagEntity saved = tagDao.save(tagEntity);
-        Assertions.assertNotNull(tagEntity);
-        Assertions.assertNotNull(saved);
-        Assertions.assertNotNull(saved.getId());
-        Assertions.assertEquals(saved, tagEntity);
+        Assertions.assertThat(tagEntity).isNotNull();
+        Assertions.assertThat(saved).isNotNull();
+        Assertions.assertThat(saved.getId()).isNotNull();
+        Assertions.assertThat(saved).isEqualTo(tagEntity);
 
         if (saved.getId() != 1) {
             Optional<TagEntity> entity = tagDao.findById(saved.getId());
 
-            org.assertj.core.api.Assertions.assertThat(entity).usingRecursiveComparison().isNotEqualTo(Optional.of(saved));
+            Assertions.assertThat(entity).usingRecursiveComparison().isNotEqualTo(Optional.of(saved));
         }
     }
 
@@ -197,12 +197,12 @@ class TagDaoTest {
     @ArgumentsSource(TagProvider.class)
     public void shouldReturnTrue(TagEntity tagEntity) {
         TagEntity saved = tagDao.save(tagEntity);
-        Assertions.assertNotNull(tagEntity);
-        Assertions.assertNotNull(saved);
-        Assertions.assertNotNull(saved.getId());
-        Assertions.assertEquals(saved, tagEntity);
+        Assertions.assertThat(tagEntity).isNotNull();
+        Assertions.assertThat(saved).isNotNull();
+        Assertions.assertThat(saved.getId()).isNotNull();
+        Assertions.assertThat(saved).isEqualTo(tagEntity);
 
-        Assertions.assertTrue(tagDao.existsByName(tagEntity.getName()));
+        Assertions.assertThat(tagDao.existsByName(tagEntity.getName())).isTrue();
     }
 
     @DisplayName("Should delete entity by id")
@@ -210,13 +210,13 @@ class TagDaoTest {
     @ArgumentsSource(TagProvider.class)
     public void shouldDeleteById(TagEntity tagEntity) {
         TagEntity saved = tagDao.save(tagEntity);
-        Assertions.assertNotNull(tagEntity);
-        Assertions.assertNotNull(saved);
-        Assertions.assertNotNull(saved.getId());
-        Assertions.assertEquals(saved, tagEntity);
+        Assertions.assertThat(tagEntity).isNotNull();
+        Assertions.assertThat(saved).isNotNull();
+        Assertions.assertThat(saved.getId()).isNotNull();
+        Assertions.assertThat(saved).isEqualTo(tagEntity);
 
         tagDao.deleteById(saved.getId());
-        Assertions.assertFalse(tagDao.existsByName(saved.getName()));
+        Assertions.assertThat(tagDao.existsByName(saved.getName())).isFalse();
     }
 
     public static Stream<Arguments> tags() {
@@ -231,5 +231,4 @@ class TagDaoTest {
         }
         return idArguments.stream();
     }
-
 }

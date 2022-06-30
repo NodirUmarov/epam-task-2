@@ -8,5 +8,5 @@ import java.util.Set;
 public interface DtoMapper<T, S> {
     S toDto(T entity);
 
-    Set<S> toDtoList(Set<T> entityList);
+    Set<S> toDtoSet(Set<T> entitySet);
 }

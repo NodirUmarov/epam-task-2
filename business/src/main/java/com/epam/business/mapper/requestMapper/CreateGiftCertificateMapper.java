@@ -1,4 +1,4 @@
-package com.epam.business.mapper.request;
+package com.epam.business.mapper.requestMapper;
 
 import com.epam.business.mapper.config.ConfigMapper;
 import com.epam.business.mapper.config.EntityMapper;
@@ -12,7 +12,6 @@ import org.mapstruct.Mapper;
  */
 @Mapper(config = ConfigMapper.class)
 public interface CreateGiftCertificateMapper extends EntityMapper<GiftCertificateEntity, CreateGiftCertificateRequest> {
-
     default LocalDateTime toLocalDateTime(Long duration) {
         return LocalDateTime.now().plusDays(duration);
     }

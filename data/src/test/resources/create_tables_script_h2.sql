@@ -8,7 +8,7 @@ CREATE TABLE tb_gift_certificates
     name             VARCHAR(100)            NOT NULL,
     price            NUMERIC                 NOT NULL,
     duration         TIMESTAMP               NOT NULL,
-    description      VARCHAR                 NOT NULL,
+    description      VARCHAR,
     create_date      TIMESTAMP DEFAULT now() NOT NULL,
     last_update_date TIMESTAMP,
 

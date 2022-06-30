@@ -17,7 +17,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import javax.sql.DataSource;
-import org.junit.jupiter.api.Assertions;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -70,15 +70,15 @@ class GiftCertificateDaoTest {
     @ArgumentsSource(GiftCertificateProvider.class)
     public void shouldSaveGiftCertificateAndReturn(GiftCertificateEntity giftCertificateEntity) {
         GiftCertificateEntity saved = giftCertificateDao.save(giftCertificateEntity);
-        Assertions.assertNotNull(saved.getId());
-        Assertions.assertEquals(giftCertificateEntity, saved);
+        Assertions.assertThat(saved.getId()).isNotNull();
+        Assertions.assertThat(giftCertificateEntity).isEqualTo(saved);
     }
 
     @DisplayName("Should throw IllegalArgumentException due to null value passed as argument to save")
     @ParameterizedTest
     @NullSource
     public void shouldNotSaveAndThrowIllegalArgumentException(GiftCertificateEntity giftCertificateEntity) {
-        Assertions.assertThrowsExactly(IllegalArgumentException.class, () -> giftCertificateDao.save(giftCertificateEntity));
+        Assertions.assertThatIllegalArgumentException().isThrownBy(() -> giftCertificateDao.save(giftCertificateEntity));
     }
 
     @DisplayName("Should find gift certificate by id and return it")
@@ -86,15 +86,15 @@ class GiftCertificateDaoTest {
     @ArgumentsSource(GiftCertificateProvider.class)
     public void shouldFindEntitiesByIdAndReturn(GiftCertificateEntity giftCertificateEntity) {
         GiftCertificateEntity saved = giftCertificateDao.save(giftCertificateEntity);
-        Assertions.assertNotNull(giftCertificateEntity);
-        Assertions.assertNotNull(saved);
-        Assertions.assertNotNull(saved.getId());
-        Assertions.assertEquals(saved, giftCertificateEntity);
+        Assertions.assertThat(giftCertificateEntity).isNotNull();
+        Assertions.assertThat(saved).isNotNull();
+        Assertions.assertThat(saved.getId()).isNotNull();
+        Assertions.assertThat(saved).isEqualTo(giftCertificateEntity);
 
         Optional<GiftCertificateEntity> entity = giftCertificateDao.findById(giftCertificateEntity.getId());
 
-        org.assertj.core.api.Assertions.assertThatCode(entity::get).doesNotThrowAnyException();
-        org.assertj.core.api.Assertions.assertThat(entity).usingRecursiveComparison().isEqualTo(Optional.of(saved));
+        Assertions.assertThatCode(entity::get).doesNotThrowAnyException();
+        Assertions.assertThat(entity).usingRecursiveComparison().isEqualTo(Optional.of(saved));
     }
 
     @DisplayName("Optional should contain only null element")
@@ -102,14 +102,14 @@ class GiftCertificateDaoTest {
     @MethodSource("failureCase")
     public void shouldContainOnlyNull(Long id) {
         Optional<GiftCertificateEntity> entity = giftCertificateDao.findById(id);
-        Assertions.assertTrue(entity.isEmpty());
+        Assertions.assertThat(entity.isEmpty()).isTrue();
     }
 
     @DisplayName("Should throw IllegalArgumentException due to null value passed as argument to findById")
     @ParameterizedTest
     @NullSource
     public void shouldNotFindEntityAndThrowIllegalArgumentException(Long id) {
-        Assertions.assertThrowsExactly(IllegalArgumentException.class, () -> giftCertificateDao.findById(id));
+        Assertions.assertThatIllegalArgumentException().isThrownBy(() -> giftCertificateDao.findById(id));
     }
 
     @DisplayName("Should get gift certificate by id and return it")
@@ -118,20 +118,20 @@ class GiftCertificateDaoTest {
     public void shouldGetEntitiesByIdAndReturn(GiftCertificateEntity giftCertificateEntity) {
         GiftCertificateEntity saved = giftCertificateDao.save(giftCertificateEntity);
 
-        Assertions.assertNotNull(giftCertificateEntity);
-        Assertions.assertNotNull(saved);
-        Assertions.assertNotNull(saved.getId());
-        Assertions.assertEquals(saved, giftCertificateEntity);
+        Assertions.assertThat(giftCertificateEntity).isNotNull();
+        Assertions.assertThat(saved).isNotNull();
+        Assertions.assertThat(saved.getId()).isNotNull();
+        Assertions.assertThat(saved).isEqualTo(giftCertificateEntity);
 
         GiftCertificateEntity entity = giftCertificateDao.getById(saved.getId());
-        org.assertj.core.api.Assertions.assertThat(entity).usingRecursiveComparison().isEqualTo(saved);
+        Assertions.assertThat(entity).usingRecursiveComparison().isEqualTo(saved);
     }
 
     @DisplayName("Should throw EntityNotFoundException")
     @ParameterizedTest
     @MethodSource("failureCase")
     public void shouldNotGetEntityThrowEntityNotFoundException(Long id) {
-        Assertions.assertThrowsExactly(EntityNotFoundException.class, () -> giftCertificateDao.getById(id));
+        Assertions.assertThatExceptionOfType(EntityNotFoundException.class).isThrownBy(() -> giftCertificateDao.getById(id));
     }
 
     @DisplayName("Should get wrong entity")
@@ -139,15 +139,15 @@ class GiftCertificateDaoTest {
     @ArgumentsSource(GiftCertificateProvider.class)
     public void shouldGetWrongEntity(GiftCertificateEntity giftCertificateEntity) {
         GiftCertificateEntity saved = giftCertificateDao.save(giftCertificateEntity);
-        Assertions.assertNotNull(giftCertificateEntity);
-        Assertions.assertNotNull(saved);
-        Assertions.assertNotNull(saved.getId());
-        Assertions.assertEquals(saved, giftCertificateEntity);
+        Assertions.assertThat(giftCertificateEntity).isNotNull();
+        Assertions.assertThat(saved).isNotNull();
+        Assertions.assertThat(saved.getId()).isNotNull();
+        Assertions.assertThat(saved).isEqualTo(giftCertificateEntity);
 
         if (saved.getId() != 1) {
             Optional<GiftCertificateEntity> entity = giftCertificateDao.findById(saved.getId());
 
-            org.assertj.core.api.Assertions.assertThat(entity).usingRecursiveComparison().isNotEqualTo(Optional.of(saved));
+            Assertions.assertThat(entity).usingRecursiveComparison().isNotEqualTo(Optional.of(saved));
         }
     }
 
@@ -155,7 +155,7 @@ class GiftCertificateDaoTest {
     @ParameterizedTest
     @NullSource
     public void shouldNotGetEntityAndThrowIllegalArgumentException(Long id) {
-        Assertions.assertThrowsExactly(IllegalArgumentException.class, () -> giftCertificateDao.getById(id));
+        Assertions.assertThatIllegalArgumentException().isThrownBy(() -> giftCertificateDao.getById(id));
     }
 
     @DisplayName("Should get entities by certificate name")
@@ -163,22 +163,22 @@ class GiftCertificateDaoTest {
     @ArgumentsSource(GiftCertificateProvider.class)
     public void shouldFindByName(GiftCertificateEntity giftCertificateEntity) {
         GiftCertificateEntity saved = giftCertificateDao.save(giftCertificateEntity);
-        Assertions.assertNotNull(giftCertificateEntity);
-        Assertions.assertNotNull(saved);
-        Assertions.assertNotNull(saved.getId());
-        Assertions.assertNotNull(giftCertificateEntity.getName());
-        Assertions.assertEquals(saved, giftCertificateEntity);
+        Assertions.assertThat(giftCertificateEntity).isNotNull();
+        Assertions.assertThat(saved).isNotNull();
+        Assertions.assertThat(saved.getId()).isNotNull();
+        Assertions.assertThat(giftCertificateEntity.getName()).isNotNull();
+        Assertions.assertThat(saved).isEqualTo(giftCertificateEntity);
 
         Optional<GiftCertificateEntity> entity = giftCertificateDao.findByName(giftCertificateEntity.getName());
 
-        org.assertj.core.api.Assertions.assertThat(entity).usingRecursiveComparison().isEqualTo(Optional.of(giftCertificateEntity));
+        Assertions.assertThat(entity).usingRecursiveComparison().isEqualTo(Optional.of(giftCertificateEntity));
     }
 
     @DisplayName("Should throw IllegalArgumentException due to null value passed as argument to findByName")
     @ParameterizedTest
     @NullSource
     public void shouldNotFindByNameAndThrowIllegalArgumentException(String tagName) {
-        Assertions.assertThrowsExactly(IllegalArgumentException.class, () -> giftCertificateDao.findByName(tagName));
+        Assertions.assertThatIllegalArgumentException().isThrownBy(() -> giftCertificateDao.findByName(tagName));
     }
 
     @DisplayName("Should find gift certificate by tag name")
@@ -186,21 +186,21 @@ class GiftCertificateDaoTest {
     @ArgumentsSource(GiftCertificateProvider.class)
     public void shouldFindByTagName(GiftCertificateEntity giftCertificateEntity) {
         GiftCertificateEntity saved = giftCertificateDao.save(giftCertificateEntity);
-        Assertions.assertNotNull(giftCertificateEntity);
-        Assertions.assertNotNull(saved);
-        Assertions.assertNotNull(saved.getId());
-        Assertions.assertNotNull(giftCertificateEntity.getTags());
-        Assertions.assertEquals(saved, giftCertificateEntity);
+        Assertions.assertThat(giftCertificateEntity).isNotNull();
+        Assertions.assertThat(saved).isNotNull();
+        Assertions.assertThat(saved.getId()).isNotNull();
+        Assertions.assertThat(giftCertificateEntity.getTags()).isNotNull();
+        Assertions.assertThat(saved).isEqualTo(giftCertificateEntity);
 
         Set<TagEntity> tagEntities = saved.getTags();
-        Assertions.assertEquals(giftCertificateEntity, saved);
+        Assertions.assertThat(giftCertificateEntity).isEqualTo(saved);
         org.assertj.core.api.Assertions.assertThat(tagEntities).usingRecursiveComparison().isEqualTo(giftCertificateEntity.getTags());
 
         tagEntities.forEach(tagEntity -> giftCertificateDao.findByTag(tagEntity.getName(), 500, 0, SortType.NONE)
                 .forEach(entity -> {
-                    Assertions.assertNotNull(entity);
-                    Assertions.assertNotNull(entity.getTags());
-                    Assertions.assertTrue(entity.getTags().stream().anyMatch(tag -> tag.equals(tagEntity)));
+                    Assertions.assertThat(entity).isNotNull();
+                    Assertions.assertThat(entity.getTags()).isNotNull();
+                    Assertions.assertThat(entity.getTags().stream().anyMatch(tag -> tag.equals(tagEntity))).isTrue();
                 }));
 
     }
@@ -212,11 +212,11 @@ class GiftCertificateDaoTest {
         Random random = new Random();
 
         GiftCertificateEntity saved = giftCertificateDao.save(giftCertificateEntity);
-        Assertions.assertNotNull(giftCertificateEntity);
-        Assertions.assertNotNull(saved);
-        Assertions.assertNotNull(saved.getId());
-        Assertions.assertNotNull(giftCertificateEntity.getTags());
-        Assertions.assertEquals(saved, giftCertificateEntity);
+        Assertions.assertThat(giftCertificateEntity).isNotNull();
+        Assertions.assertThat(saved).isNotNull();
+        Assertions.assertThat(saved.getId()).isNotNull();
+        Assertions.assertThat(giftCertificateEntity.getTags()).isNotNull();
+        Assertions.assertThat(saved).isEqualTo(giftCertificateEntity);
 
         Set<TagEntity> tagEntities = giftCertificateEntity.getTags().stream()
                 .collect(CollectorUtils.toShuffledStream())
@@ -230,18 +230,17 @@ class GiftCertificateDaoTest {
                         tagEntities.stream().map(TagEntity::getName).collect(Collectors.toSet())))
                 .reduce((first, second) -> second);
 
-        Assertions.assertFalse(entity.isEmpty());
+        Assertions.assertThat(entity.isEmpty()).isFalse();
         tagEntities.forEach(tagEntity ->
-                org.assertj.core.api.Assertions.assertThat(new ArrayList<>(entity.get().getTags())).asList().doesNotContain(tagEntity));
-        Assertions.assertNotEquals(prevSize, entity.get().getTags().size());
+                Assertions.assertThat(new ArrayList<>(entity.get().getTags())).asList().doesNotContain(tagEntity));
+        Assertions.assertThat(prevSize).isNotEqualTo(entity.get().getTags().size());
     }
 
     @DisplayName("Should not untag the certificate, as null value passed to arguments of untag method")
     @ParameterizedTest
     @CsvSource(value = {"null, null"}, nullValues = {"null"})
     public void shouldNotUntagAndThrowIllegalArgumentException(Long id, Set<String> tagName) {
-        Assertions.assertThrowsExactly(IllegalArgumentException.class, () ->
-                giftCertificateDao.untagCertificate(id, tagName));
+        Assertions.assertThatIllegalArgumentException().isThrownBy(() -> giftCertificateDao.untagCertificate(id, tagName));
     }
 
     @DisplayName("Should return true if all passed ids exists in database")
@@ -249,12 +248,13 @@ class GiftCertificateDaoTest {
     @ArgumentsSource(GiftCertificateProvider.class)
     public void shouldReturnTrue(GiftCertificateEntity giftCertificateEntity) {
         GiftCertificateEntity saved = giftCertificateDao.save(giftCertificateEntity);
-        Assertions.assertNotNull(giftCertificateEntity);
-        Assertions.assertNotNull(saved);
-        Assertions.assertNotNull(saved.getId());
-        Assertions.assertEquals(saved, giftCertificateEntity);
+        Assertions.assertThat(giftCertificateEntity).isNotNull();
+        Assertions.assertThat(saved).isNotNull();
+        Assertions.assertThat(saved.getId()).isNotNull();
+        Assertions.assertThat(giftCertificateEntity.getTags()).isNotNull();
+        Assertions.assertThat(saved).isEqualTo(giftCertificateEntity);
 
-        Assertions.assertTrue(giftCertificateDao.existsById(giftCertificateEntity.getId()));
+        Assertions.assertThat(giftCertificateDao.existsById(giftCertificateEntity.getId())).isTrue();
     }
 
     @DisplayName("Should update entity fields and return")
@@ -262,10 +262,10 @@ class GiftCertificateDaoTest {
     @ArgumentsSource(GiftCertificateProvider.class)
     public void shouldUpdateAndReturn(GiftCertificateEntity giftCertificateEntity) {
         GiftCertificateEntity saved = giftCertificateDao.save(giftCertificateEntity);
-        Assertions.assertNotNull(giftCertificateEntity);
-        Assertions.assertNotNull(saved);
-        Assertions.assertNotNull(saved.getId());
-        Assertions.assertEquals(saved, giftCertificateEntity);
+        Assertions.assertThat(giftCertificateEntity).isNotNull();
+        Assertions.assertThat(saved).isNotNull();
+        Assertions.assertThat(saved.getId()).isNotNull();
+        Assertions.assertThat(saved).isEqualTo(giftCertificateEntity);
 
         Optional<GiftCertificateEntity> toCheck = giftCertificateDao.findById(giftCertificateEntity.getId());
         org.assertj.core.api.Assertions.assertThat(toCheck).usingRecursiveComparison().isEqualTo(Optional.of(saved));
@@ -314,7 +314,7 @@ class GiftCertificateDaoTest {
                 entity.setPrice(entity.getPrice().add(BigDecimal.valueOf(40000)));
         }
         entity = giftCertificateDao.save(entity);
-        org.assertj.core.api.Assertions.assertThat(toCheck).usingRecursiveComparison().isNotEqualTo(Optional.of(entity));
+        Assertions.assertThat(toCheck).usingRecursiveComparison().isNotEqualTo(Optional.of(entity));
     }
 
     @DisplayName("Should delete entity by id")
@@ -322,13 +322,14 @@ class GiftCertificateDaoTest {
     @ArgumentsSource(GiftCertificateProvider.class)
     public void shouldDeleteById(GiftCertificateEntity giftCertificateEntity) {
         GiftCertificateEntity saved = giftCertificateDao.save(giftCertificateEntity);
-        Assertions.assertNotNull(giftCertificateEntity);
-        Assertions.assertNotNull(saved);
-        Assertions.assertNotNull(saved.getId());
-        Assertions.assertEquals(saved, giftCertificateEntity);
+        Assertions.assertThat(giftCertificateEntity).isNotNull();
+        Assertions.assertThat(saved).isNotNull();
+        Assertions.assertThat(saved.getId()).isNotNull();
+        Assertions.assertThat(giftCertificateEntity.getTags()).isNotNull();
+        Assertions.assertThat(saved).isEqualTo(giftCertificateEntity);
 
         giftCertificateDao.deleteById(saved.getId());
-        Assertions.assertFalse(giftCertificateDao.existsById(saved.getId()));
+        Assertions.assertThat(giftCertificateDao.existsById(saved.getId())).isFalse();
     }
 
     private static Stream<Arguments> failureCase() {

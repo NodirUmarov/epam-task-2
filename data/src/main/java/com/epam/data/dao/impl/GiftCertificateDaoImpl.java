@@ -39,7 +39,7 @@ public class GiftCertificateDaoImpl implements GiftCertificateDao {
 
     private final String INSERT_JT = "" +
             "INSERT INTO gift_certificate_has_tag " +
-            "VALUES (:certificateId, :tagId);";
+            "VALUES (:certificateId, (SELECT id FROM tb_tags WHERE name IN (:name)));";
 
     private final String DELETE_BY_ID_JT = "DELETE FROM gift_certificate_has_tag WHERE gift_certificate_id IN (:certificateId)";
 
@@ -141,13 +141,16 @@ public class GiftCertificateDaoImpl implements GiftCertificateDao {
         for (TagEntity tag : tagEntities) {
             Map<String, Object> params = new HashMap<>();
             params.put("certificateId", giftCertificateEntity.getId());
-            params.put("tagId", tag.getId());
+            params.put("name", tag.getName());
             batchInputs[index++] = params;
         }
         namedParameterJdbcTemplate.batchUpdate(INSERT_JT, batchInputs);
     }
 
     private GiftCertificateEntity update(GiftCertificateEntity giftCertificateEntity) {
+        if (!existsById(giftCertificateEntity.getId())) {
+            throw new EntityNotFoundException();
+        }
         namedParameterJdbcTemplate.update(UPDATE_BY_ID, new MapSqlParameterSource()
                 .addValue("id", giftCertificateEntity.getId())
                 .addValue("name", giftCertificateEntity.getName())

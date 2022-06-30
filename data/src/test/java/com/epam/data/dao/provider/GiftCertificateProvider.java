@@ -18,7 +18,7 @@ public class GiftCertificateProvider implements ArgumentsProvider {
     @Override
     public Stream<? extends Arguments> provideArguments(ExtensionContext extensionContext) {
         List<Arguments> listOfArguments = new ArrayList<>();
-        for (int i = 1; i <= 500; i++) {
+        for (int i = 1; i <= 50; i++) {
             listOfArguments.add(Arguments.of(GiftCertificateEntity.builder()
                     .name("Certificate #" + i)
                     .price(BigDecimal.valueOf(i * 50))
