@@ -5,7 +5,7 @@ import com.epam.business.exception.EntityNameNotFountException;
 import com.epam.business.model.dto.GiftCertificateDto;
 import com.epam.business.model.request.CreateGiftCertificateRequest;
 import com.epam.business.model.request.UpdateGiftCertificateRequest;
-import com.epam.data.model.enums.SortType;
+import com.epam.lib.constants.SortType;
 import java.util.Set;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +22,6 @@ public interface GiftCertificateService {
 
     void deleteById(Long id);
 
-    GiftCertificateDto update(Long id, UpdateGiftCertificateRequest request) throws EntityIdNotFoundException;
+    GiftCertificateDto updateById(Long id, UpdateGiftCertificateRequest request) throws EntityIdNotFoundException;
 
 }

@@ -5,8 +5,8 @@ import com.epam.data.dao.GiftCertificateDao;
 import com.epam.data.dao.impl.query.GiftCertificateQuery;
 import com.epam.data.model.entity.GiftCertificateEntity;
 import com.epam.data.model.entity.TagEntity;
-import com.epam.data.model.enums.SortType;
-import com.epam.data.model.exception.EntityNotFoundException;
+import com.epam.lib.constants.SortType;
+import com.epam.data.exception.DataNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -61,13 +61,13 @@ public class GiftCertificateDaoImpl implements GiftCertificateDao {
     }
 
     @Override
-    public GiftCertificateEntity getById(Long id) throws IllegalArgumentException, EntityNotFoundException {
+    public GiftCertificateEntity getById(Long id) throws IllegalArgumentException, DataNotFoundException {
         checkForNull(id);
         try {
             return Objects.requireNonNull(namedParameterJdbcTemplate.query(SELECT_BY_ID,
                     new MapSqlParameterSource("id", id), giftCertificateResultSetExtractor)).get(0);
         } catch (NullPointerException | IndexOutOfBoundsException ex) {
-            throw new EntityNotFoundException();
+            throw new DataNotFoundException();
         }
     }
 
@@ -112,7 +112,7 @@ public class GiftCertificateDaoImpl implements GiftCertificateDao {
 
     private GiftCertificateEntity update(GiftCertificateEntity giftCertificateEntity) {
         if (!existsById(giftCertificateEntity.getId())) {
-            throw new EntityNotFoundException();
+            throw new DataNotFoundException();
         }
         namedParameterJdbcTemplate.update(UPDATE_BY_ID, new MapSqlParameterSource()
                 .addValue("id", giftCertificateEntity.getId())

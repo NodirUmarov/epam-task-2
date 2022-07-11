@@ -5,8 +5,8 @@ import com.epam.data.dao.provider.CollectorUtils;
 import com.epam.data.dao.provider.GiftCertificateProvider;
 import com.epam.data.model.entity.GiftCertificateEntity;
 import com.epam.data.model.entity.TagEntity;
-import com.epam.data.model.enums.SortType;
-import com.epam.data.model.exception.EntityNotFoundException;
+import com.epam.lib.constants.SortType;
+import com.epam.data.exception.DataNotFoundException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -131,7 +131,7 @@ class GiftCertificateDaoTest {
     @ParameterizedTest
     @MethodSource("failureCase")
     public void shouldNotGetEntityThrowEntityNotFoundException(Long id) {
-        Assertions.assertThatExceptionOfType(EntityNotFoundException.class).isThrownBy(() -> giftCertificateDao.getById(id));
+        Assertions.assertThatExceptionOfType(DataNotFoundException.class).isThrownBy(() -> giftCertificateDao.getById(id));
     }
 
     @DisplayName("Should get wrong entity")

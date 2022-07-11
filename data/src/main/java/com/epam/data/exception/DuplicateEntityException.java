@@ -1,4 +1,4 @@
-package com.epam.data.model.exception;
+package com.epam.data.exception;
 
 public class DuplicateEntityException extends RuntimeException {
 }

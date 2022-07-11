@@ -13,11 +13,10 @@ import com.epam.business.service.provider.UpdateGiftCertificateProvider;
 import com.epam.data.dao.GiftCertificateDao;
 import com.epam.data.model.entity.GiftCertificateEntity;
 import com.epam.data.model.entity.TagEntity;
-import com.epam.data.model.enums.SortType;
+import com.epam.lib.constants.SortType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.ArgumentsSource;
@@ -27,7 +26,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.LinkedHashSet;
 import java.util.Random;
@@ -148,7 +146,7 @@ class GiftCertificateServiceTest {
                 .description(request.getDescription())
                 .build());
 
-        giftCertificateServiceImpl.update(id, request);
+        giftCertificateServiceImpl.updateById(id, request);
 
         ArgumentCaptor<GiftCertificateEntity> entityCaptor = ArgumentCaptor.forClass(GiftCertificateEntity.class);
 

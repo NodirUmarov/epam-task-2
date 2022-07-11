@@ -3,7 +3,7 @@ package com.epam.data.dao;
 import com.epam.data.config.DataConfig;
 import com.epam.data.dao.provider.TagProvider;
 import com.epam.data.model.entity.TagEntity;
-import com.epam.data.model.exception.EntityNotFoundException;
+import com.epam.data.exception.DataNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -172,7 +172,7 @@ class TagDaoTest {
     @ParameterizedTest
     @MethodSource("failureCase")
     public void shouldNotGetEntityThrowEntityNotFoundException(Long id) {
-        Assertions.assertThatExceptionOfType(EntityNotFoundException.class).isThrownBy(() -> tagDao.getById(id));
+        Assertions.assertThatExceptionOfType(DataNotFoundException.class).isThrownBy(() -> tagDao.getById(id));
     }
 
     @DisplayName("Should get wrong entity")

@@ -2,7 +2,7 @@ package com.epam.data.dao;
 
 import com.epam.data.model.entity.TagEntity;
 import com.epam.data.model.entity.GiftCertificateEntity;
-import com.epam.data.model.enums.SortType;
+import com.epam.lib.constants.SortType;
 
 import java.util.List;
 import java.util.Optional;

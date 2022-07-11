@@ -1,6 +1,6 @@
 package com.epam.data.dao.impl.query;
 
-import com.epam.data.model.enums.SortType;
+import com.epam.lib.constants.SortType;
 
 public class GiftCertificateQuery {
 

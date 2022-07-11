@@ -3,8 +3,8 @@ package com.epam.data.dao.impl;
 import com.epam.data.dao.TagDao;
 import com.epam.data.dao.rowmapper.TagRowMapper;
 import com.epam.data.model.entity.TagEntity;
-import com.epam.data.model.exception.DuplicateEntityException;
-import com.epam.data.model.exception.EntityNotFoundException;
+import com.epam.data.exception.DuplicateEntityException;
+import com.epam.data.exception.DataNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -107,7 +107,7 @@ public class TagDaoImpl implements TagDao {
     }
 
     @Override
-    public TagEntity getById(Long id) throws IllegalArgumentException, EntityNotFoundException {
+    public TagEntity getById(Long id) throws IllegalArgumentException, DataNotFoundException {
         checkForNull(id);
         try {
             TagEntity entity = namedParameterJdbcTemplate.query(SELECT_BY_ID,
@@ -117,7 +117,7 @@ public class TagDaoImpl implements TagDao {
             }
             return entity;
         } catch (NullPointerException | IndexOutOfBoundsException ex) {
-            throw new EntityNotFoundException();
+            throw new DataNotFoundException();
         }
     }
 

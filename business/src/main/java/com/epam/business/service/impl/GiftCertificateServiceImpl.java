@@ -12,7 +12,7 @@ import com.epam.business.service.GiftCertificateService;
 import com.epam.business.service.TagService;
 import com.epam.data.dao.GiftCertificateDao;
 import com.epam.data.model.entity.GiftCertificateEntity;
-import com.epam.data.model.enums.SortType;
+import com.epam.lib.constants.SortType;
 import java.util.HashSet;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
@@ -57,7 +57,7 @@ public class GiftCertificateServiceImpl implements GiftCertificateService {
     }
 
     @Override
-    public GiftCertificateDto update(Long id, UpdateGiftCertificateRequest request) throws EntityIdNotFoundException {
+    public GiftCertificateDto updateById(Long id, UpdateGiftCertificateRequest request) throws EntityIdNotFoundException {
         GiftCertificateEntity entity = updateGiftCertificateMapper.toEntity(request);
         entity.setId(id);
 

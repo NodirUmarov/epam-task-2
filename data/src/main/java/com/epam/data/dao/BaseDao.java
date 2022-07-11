@@ -1,6 +1,6 @@
 package com.epam.data.dao;
 
-import com.epam.data.model.exception.EntityNotFoundException;
+import com.epam.data.exception.DataNotFoundException;
 
 import java.util.Optional;
 
@@ -39,10 +39,10 @@ public interface BaseDao<ID, T> {
      * @param id must not be null
      * @return entity with given id
      * @throws IllegalArgumentException if id is null
-     * @throws EntityNotFoundException if no entity found
+     * @throws DataNotFoundException if no entity found
      * @since 0.1.0
      */
-    T getById(Long id) throws IllegalArgumentException, EntityNotFoundException;
+    T getById(Long id) throws IllegalArgumentException, DataNotFoundException;
 
     /**
      * <p>Saves a given entity. If saved entity is already exists by its id, methods updates only changed fields.

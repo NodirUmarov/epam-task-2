@@ -1,4 +1,4 @@
-package com.epam.data.model.enums;
+package com.epam.lib.constants;
 
 public enum SortType {
     ASC("ASC"),
