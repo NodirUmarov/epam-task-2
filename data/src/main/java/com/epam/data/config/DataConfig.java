@@ -30,7 +30,7 @@ public class DataConfig {
     @Bean
     @Primary
     public DataSource postgresqlDataSource() {
-        var dataSource = new DriverManagerDataSource();
+        DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName(driver);
         dataSource.setUrl(url);
         dataSource.setUsername(username);
