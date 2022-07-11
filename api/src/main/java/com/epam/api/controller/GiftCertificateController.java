@@ -18,14 +18,14 @@ public class GiftCertificateController {
 
     private final GiftCertificateService giftCertificateService;
 
-    @GetMapping
+    @GetMapping(value = "/", params = "name")
     public ResponseEntity<?> getByName(@RequestParam String name) {
         return ResponseEntity
                 .ok(giftCertificateService
                         .getByName(name));
     }
 
-    @GetMapping
+    @GetMapping(value = "/", params = "{tag, quantity, page, sortType}")
     public ResponseEntity<?> getByTag(@RequestParam String tag,
                                       @RequestParam(defaultValue = "5", required = false) Integer quantity,
                                       @RequestParam(defaultValue = "1", required = false) Integer page,
@@ -35,7 +35,7 @@ public class GiftCertificateController {
                         .getByTag(tag, quantity, page, sortType));
     }
 
-    @PostMapping
+    @PostMapping("/")
     public ResponseEntity<?> create(@RequestBody CreateGiftCertificateRequest request) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
