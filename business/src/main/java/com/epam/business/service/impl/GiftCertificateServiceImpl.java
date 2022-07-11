@@ -46,7 +46,7 @@ public class GiftCertificateServiceImpl implements GiftCertificateService {
 
     @Override
     public Set<GiftCertificateDto> getByTag(String tag, Integer quantity, Integer page, SortType sortType) {
-        int offset = page - 1;
+        int offset = (page - 1) * quantity;
         Set<GiftCertificateEntity> entities = new HashSet<>(giftCertificateDao.findByTag(tag, quantity, offset, sortType));
         return giftCertificateMapper.toDtoSet(entities);
     }

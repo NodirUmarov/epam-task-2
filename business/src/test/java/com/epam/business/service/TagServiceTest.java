@@ -55,7 +55,7 @@ class TagServiceTest {
 
     @BeforeEach
     public void beforeAll() {
-        Assertions.assertThat(tagServiceImpl).isNotNull();
+        assertThat(tagServiceImpl).isNotNull();
     }
 
     @DisplayName("Should create tag")
