@@ -13,7 +13,6 @@ repositories {
 }
 
 dependencies {
-    compile 'com.github.jsimone:webapp-runner:8.5.11.3'
 
     testImplementation "org.springframework:spring-test:$springVersion"
     testImplementation "org.junit.jupiter:junit-jupiter-api:$testVersion"
@@ -27,19 +26,6 @@ dependencies {
     implementation "org.springframework:spring-context:$springVersion"
 }
 
-task stage() {
-    dependsOn clean, war
-}
-war.mustRunAfter clean
-
-task copyToLib(type: Copy) {
-    into "$buildDir/server"
-    from(configurations.compile) {
-        include "webapp-runner*"
-    }
-}
-
-stage.dependsOn(copyToLib)
 
 test {
     useJUnitPlatform()
