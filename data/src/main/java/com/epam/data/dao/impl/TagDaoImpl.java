@@ -36,7 +36,6 @@ public class TagDaoImpl implements TagDao {
     private final TagRowMapper tagRowMapper;
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-    @SafeVarargs
     private <T> void checkForNull(T... object) {
         if (object == null) {
             throw new IllegalArgumentException();

@@ -43,7 +43,6 @@ public class GiftCertificateDaoImpl implements GiftCertificateDao {
     private final GiftCertificateResultSetExtractor giftCertificateResultSetExtractor;
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-    @SafeVarargs
     private <T> void checkForNull(T... object) {
         for (T t : object) {
             if (t == null) {
