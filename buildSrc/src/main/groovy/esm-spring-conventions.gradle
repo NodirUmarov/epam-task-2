@@ -13,6 +13,8 @@ repositories {
 }
 
 dependencies {
+    compile 'com.github.jsimone:webapp-runner:8.5.11.3'
+
     testImplementation "org.springframework:spring-test:$springVersion"
     testImplementation "org.junit.jupiter:junit-jupiter-api:$testVersion"
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$testVersion"
@@ -23,10 +25,6 @@ dependencies {
     testAnnotationProcessor "org.projectlombok:lombok:$lombokVersion"
     annotationProcessor "org.projectlombok:lombok:$lombokVersion"
     implementation "org.springframework:spring-context:$springVersion"
-}
-
-dependencies {
-    compile 'com.github.jsimone:webapp-runner:8.5.11.3'
 }
 
 task stage() {
