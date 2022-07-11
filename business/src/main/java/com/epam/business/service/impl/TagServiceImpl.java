@@ -24,15 +24,19 @@ public class TagServiceImpl implements TagService {
 
     @Override
     public Set<TagDto> create(Set<CreateTagRequest> tags) {
-        Set<TagEntity> tagEntitySet = tagDao.saveAll(createTagMapper.toEntitySet(tags));
+        Set<TagEntity> tagEntitySet = createTagMapper.toEntitySet(tags);
+
+        tagEntitySet = tagDao.saveAll(tagEntitySet);
         return tagMapper.toDtoSet(tagEntitySet);
     }
 
     @Override
     public Set<TagDto> getAllTags(Integer quantity, Integer page) {
-        int offset = page - 1;
+        return tagMapper.toDtoSet(tagDao.findAllSorted(quantity, getOffset(quantity, page)));
+    }
 
-        return tagMapper.toDtoSet(tagDao.findAllSorted(quantity, offset));
+    private Integer getOffset(Integer quantity, Integer page) {
+        return (page - 1) * quantity;
     }
 
     @Override

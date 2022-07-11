@@ -18,6 +18,13 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import static com.epam.data.dao.impl.query.TagQuery.SELECT_BY_NAME;
+import static com.epam.data.dao.impl.query.TagQuery.INSERT;
+import static com.epam.data.dao.impl.query.TagQuery.SELECT_BY_ID;
+import static com.epam.data.dao.impl.query.TagQuery.DELETE_BY_ID;
+import static com.epam.data.dao.impl.query.TagQuery.FIND_ALL_SORTED_PAGED;
+import static com.epam.data.dao.impl.query.TagQuery.EXISTS_BY_NAME;
+
 /**
  * @author <a href="https://github.com/NodirUmarov">Nodir Umarov</a> on 6/16/2022
  */
@@ -25,18 +32,6 @@ import java.util.stream.Collectors;
 @Repository
 @RequiredArgsConstructor
 public class TagDaoImpl implements TagDao {
-
-    private final String SELECT_BY_ID = "SELECT * FROM tb_tags WHERE id IN (:id);";
-
-    private final String SELECT_BY_NAME = "SELECT * FROM tb_tags WHERE name IN (:name);";
-
-    private final String FIND_ALL_SORTED_PAGED = "SELECT * FROM tb_tags ORDER BY name LIMIT :limit OFFSET :offset";
-
-    private final String EXISTS_BY_NAME = "SELECT EXISTS(SELECT * FROM tb_tags WHERE name IN (:name))";
-
-    private final String INSERT = "INSERT INTO tb_tags(name) VALUES (:name);";
-
-    private final String DELETE_BY_ID = "DELETE FROM tb_tags WHERE id IN (:id);";
 
     private final TagRowMapper tagRowMapper;
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;

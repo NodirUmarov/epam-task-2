@@ -38,7 +38,7 @@ public interface BaseDao<ID, T> {
      *
      * @param id must not be null
      * @return entity with given id
-     * @throws IllegalArgumentException                                    if id is null
+     * @throws IllegalArgumentException if id is null
      * @throws EntityNotFoundException if no entity found
      * @since 0.1.0
      */
