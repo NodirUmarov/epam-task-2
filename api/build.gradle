@@ -1,0 +1,21 @@
+plugins {
+    id 'esm-spring-conventions'
+    id 'war'
+}
+
+dependencies {
+    implementation project(":business")
+    implementation project(":lib")
+
+    compileOnly "javax.servlet:javax.servlet-api:4.0.1"
+
+    implementation 'org.hibernate.validator:hibernate-validator:7.0.4.Final'
+    implementation "org.springframework:spring-webmvc:$springVersion"
+    implementation "com.fasterxml.jackson.core:jackson-core:$jacksonVersion"
+    implementation "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion"
+    implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jacksonVersion"
+}
+
+war {
+    enabled = true
+}
