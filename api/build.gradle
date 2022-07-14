@@ -14,20 +14,4 @@ dependencies {
 
     implementation project(":business")
     implementation project(":lib")
-
-    compileOnly 'com.github.jsimone:webapp-runner:8.5.11.3'
 }
-
-task stage() {
-    dependsOn clean, war
-}
-war.mustRunAfter clean
-
-task copyToLib(type: Copy) {
-    into "$buildDir/server"
-    from(configurations.compileOnly) {
-        include "webapp-runner*"
-    }
-}
-
-stage.dependsOn(copyToLib)
