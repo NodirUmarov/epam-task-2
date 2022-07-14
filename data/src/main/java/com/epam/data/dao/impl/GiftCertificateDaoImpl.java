@@ -83,6 +83,7 @@ public class GiftCertificateDaoImpl implements GiftCertificateDao {
 
     private GiftCertificateEntity saveNew(GiftCertificateEntity giftCertificateEntity) {
         KeyHolder holder = new GeneratedKeyHolder();
+        giftCertificateEntity.setCreateDate(LocalDateTime.now());
         namedParameterJdbcTemplate.update(INSERT, new MapSqlParameterSource()
                         .addValue("name", giftCertificateEntity.getName())
                         .addValue("price", giftCertificateEntity.getPrice())

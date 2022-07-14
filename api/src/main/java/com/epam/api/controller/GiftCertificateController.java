@@ -7,35 +7,42 @@ import com.epam.lib.constants.SortType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/gift-certificate")
 public class GiftCertificateController {
 
     private final GiftCertificateService giftCertificateService;
 
-    @GetMapping(value = "/", params = "name")
+    @GetMapping
     public ResponseEntity<?> getByName(@RequestParam String name) {
         return ResponseEntity
                 .ok(giftCertificateService
                         .getByName(name));
     }
 
-    @GetMapping(value = "/", params = "{tag, quantity, page, sortType}")
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getByName(@PathVariable Long id) {
+        return ResponseEntity
+                .ok(giftCertificateService
+                        .getById(id));
+    }
+
+
+    @GetMapping(params = {"tag", "quantity", "page", "sortType"})
     public ResponseEntity<?> getByTag(@RequestParam String tag,
                                       @RequestParam(defaultValue = "5", required = false) Integer quantity,
                                       @RequestParam(defaultValue = "1", required = false) Integer page,
-                                      @RequestParam(defaultValue = "NONE", required = false) SortType sortType) {
+                                      @RequestParam SortType sortType) {
         return ResponseEntity
                 .ok(giftCertificateService
                         .getByTag(tag, quantity, page, sortType));
     }
 
-    @PostMapping("/")
+    @PostMapping
     public ResponseEntity<?> create(@RequestBody CreateGiftCertificateRequest request) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)

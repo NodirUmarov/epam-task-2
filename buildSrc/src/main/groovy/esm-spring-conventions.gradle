@@ -1,10 +1,14 @@
 plugins {
     id 'java'
     id 'idea'
+    id 'war'
 }
 
 group 'com.epam'
 version '0.1.0'
+
+sourceCompatibility = javaVersion
+targetCompatibility = javaVersion
 
 repositories {
     mavenLocal()
@@ -24,6 +28,12 @@ dependencies {
     testAnnotationProcessor "org.projectlombok:lombok:$lombokVersion"
     annotationProcessor "org.projectlombok:lombok:$lombokVersion"
     implementation "org.springframework:spring-context:$springVersion"
+
+}
+
+war {
+    enabled = true
+    classpath fileTree('src/main/resources')
 }
 
 

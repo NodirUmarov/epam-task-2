@@ -16,21 +16,14 @@ public class EndPointErrorResponse {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
     private LocalDateTime timestamp;
     private String message;
-    private StackTraceElement[] stackTraces;
 
     private EndPointErrorResponse() {
         timestamp = LocalDateTime.now();
     }
 
-    public EndPointErrorResponse(HttpStatus status) {
-        this();
-        this.status = status;
-    }
-
-    public EndPointErrorResponse(HttpStatus status, String message, Throwable ex) {
+    public EndPointErrorResponse(HttpStatus status, String message) {
         this();
         this.status = status;
         this.message = message;
-        stackTraces = ex.getStackTrace();
     }
 }

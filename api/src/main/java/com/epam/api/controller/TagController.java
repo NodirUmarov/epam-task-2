@@ -16,14 +16,14 @@ public class TagController {
 
     private final TagService tagService;
 
-    @GetMapping("/")
+    @GetMapping
     public ResponseEntity<?> getTag(@RequestParam Integer quantity,
                                     @RequestParam Integer page) {
         return ResponseEntity
                 .ok(tagService.getAllTags(quantity, page));
     }
 
-    @PostMapping("/")
+    @PostMapping
     public ResponseEntity<?> create(@RequestBody Set<CreateTagRequest> createTagRequest) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)

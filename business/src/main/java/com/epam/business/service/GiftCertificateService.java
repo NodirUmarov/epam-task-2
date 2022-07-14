@@ -1,7 +1,7 @@
 package com.epam.business.service;
 
 import com.epam.business.exception.EntityIdNotFoundException;
-import com.epam.business.exception.EntityNameNotFountException;
+import com.epam.business.exception.EntityNameNotFoundException;
 import com.epam.business.model.dto.GiftCertificateDto;
 import com.epam.business.model.request.CreateGiftCertificateRequest;
 import com.epam.business.model.request.UpdateGiftCertificateRequest;
@@ -16,7 +16,9 @@ import org.springframework.stereotype.Service;
 public interface GiftCertificateService {
     GiftCertificateDto create(CreateGiftCertificateRequest request);
 
-    GiftCertificateDto getByName(String name) throws EntityNameNotFountException;
+    GiftCertificateDto getById(Long id);
+
+    GiftCertificateDto getByName(String name) throws EntityNameNotFoundException;
 
     Set<GiftCertificateDto> getByTag(String tag, Integer quantity, Integer page, SortType sortType);
 

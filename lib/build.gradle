@@ -1,17 +1,7 @@
 plugins {
-    id 'java'
+    id 'esm-spring-conventions'
 }
 
-group 'com.epam'
-version '0.1.0'
-
-repositories {
-    mavenCentral()
-}
-
-dependencies {
-}
-
-test {
-    useJUnitPlatform()
+war {
+    enabled = true
 }

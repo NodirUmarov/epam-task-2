@@ -16,6 +16,8 @@ dependencies {
 
     implementation 'org.hibernate.validator:hibernate-validator:7.0.4.Final'
     implementation "io.springfox:springfox-swagger2:$swaggerVersion"
-    annotationProcessor "org.mapstruct:mapstruct-processor:$mapstructVersion"
+    implementation "org.mapstruct:mapstruct-processor:$mapstructVersion"
     implementation "org.mapstruct:mapstruct:$mapstructVersion"
+    compileOnly "org.mapstruct:mapstruct-processor:$mapstructVersion"
+    annotationProcessor "org.mapstruct:mapstruct-processor:$mapstructVersion"
 }

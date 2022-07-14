@@ -3,7 +3,7 @@ package com.epam.business.aop;
 import com.epam.business.exception.EntityExistsException;
 import com.epam.business.exception.EntityIdNotFoundException;
 import com.epam.business.exception.EntityIsUsingException;
-import com.epam.business.exception.EntityNameNotFountException;
+import com.epam.business.exception.EntityNameNotFoundException;
 import com.epam.data.exception.DataNotFoundException;
 import com.epam.data.exception.DuplicateEntityException;
 import com.epam.data.exception.DataIsUsingException;
@@ -35,7 +35,7 @@ public class ExceptionChaining {
 
     @AfterThrowing(pointcut = "servicePointCutByName()", throwing = "dataNotFoundException")
     public void entityNameNotFountExceptionThrow(DataNotFoundException dataNotFoundException) {
-        throw new EntityNameNotFountException();
+        throw new EntityNameNotFoundException();
     }
 
     @AfterThrowing(pointcut = "servicePointCutUpdate()", throwing = "dataNotFoundException")

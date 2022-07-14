@@ -1,5 +1,6 @@
-package com.epam.api.config;
+package com.epam.api;
 
+import com.epam.api.config.ApiConfig;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 public class ApiInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {

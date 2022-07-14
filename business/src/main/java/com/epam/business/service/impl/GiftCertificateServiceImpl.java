@@ -1,7 +1,7 @@
 package com.epam.business.service.impl;
 
 import com.epam.business.exception.EntityIdNotFoundException;
-import com.epam.business.exception.EntityNameNotFountException;
+import com.epam.business.exception.EntityNameNotFoundException;
 import com.epam.business.mapper.dto.GiftCertificateMapper;
 import com.epam.business.mapper.requestMapper.CreateGiftCertificateMapper;
 import com.epam.business.mapper.requestMapper.UpdateGiftCertificateMapper;
@@ -39,9 +39,14 @@ public class GiftCertificateServiceImpl implements GiftCertificateService {
     }
 
     @Override
-    public GiftCertificateDto getByName(String name) throws EntityNameNotFountException {
+    public GiftCertificateDto getById(Long id) {
+        return giftCertificateMapper.toDto(giftCertificateDao.findById(id).orElseThrow(EntityIdNotFoundException::new));
+    }
+
+    @Override
+    public GiftCertificateDto getByName(String name) throws EntityNameNotFoundException {
         return giftCertificateMapper.toDto(giftCertificateDao.findByName(name)
-                .orElseThrow(EntityNameNotFountException::new));
+                .orElseThrow(EntityNameNotFoundException::new));
     }
 
     @Override

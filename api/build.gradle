@@ -1,11 +1,8 @@
 plugins {
     id 'esm-spring-conventions'
-    id 'war'
 }
 
 dependencies {
-    implementation project(":business")
-    implementation project(":lib")
 
     compileOnly "javax.servlet:javax.servlet-api:4.0.1"
 
@@ -15,24 +12,6 @@ dependencies {
     implementation "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion"
     implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jacksonVersion"
 
-    compileClasspath 'com.github.jsimone:webapp-runner:8.5.11.3'
-
+    implementation project(":business")
+    implementation project(":lib")
 }
-
-war {
-    enabled = true
-}
-
-task stage() {
-    dependsOn clean, war
-}
-war.mustRunAfter clean
-
-task copyToLib(type: Copy) {
-    into "$buildDir/server"
-    from(configurations.compileClasspath) {
-        include "webapp-runner*"
-    }
-}
-
-stage.dependsOn(copyToLib)

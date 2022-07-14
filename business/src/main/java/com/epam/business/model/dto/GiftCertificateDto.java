@@ -1,5 +1,6 @@
 package com.epam.business.model.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
@@ -43,12 +44,6 @@ public class GiftCertificateDto implements Serializable {
             position = 3)
     private final BigDecimal price;
 
-    @ApiModelProperty(value = "Duration of the gift certificate",
-            name = "duration",
-            dataType = "LocalDateTime",
-            required = true,
-            position = 4)
-    private final LocalDateTime duration;
 
     @ApiModelProperty(value = "Tags that gift certificate has",
             name = "tags",
@@ -58,6 +53,15 @@ public class GiftCertificateDto implements Serializable {
             position = 5)
     private final Set<TagDto> tags;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
+    @ApiModelProperty(value = "Duration of the gift certificate",
+            name = "duration",
+            dataType = "LocalDateTime",
+            required = true,
+            position = 4)
+    private final LocalDateTime duration;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
     @ApiModelProperty(value = "Date of gift certificate's creation",
             name = "createDate",
             dataType = "LocalDateTime",
@@ -65,6 +69,7 @@ public class GiftCertificateDto implements Serializable {
             position = 6)
     private final LocalDateTime createDate;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
     @ApiModelProperty(value = "Date of gift certificate's creation",
             name = "lastUpdateDate",
             dataType = "LocalDateTime",
