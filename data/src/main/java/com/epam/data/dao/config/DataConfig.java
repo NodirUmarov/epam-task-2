@@ -1,4 +1,4 @@
-package com.epam.data.config;
+package com.epam.data.dao.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.*;

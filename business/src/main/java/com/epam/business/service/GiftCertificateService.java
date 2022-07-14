@@ -4,6 +4,7 @@ import com.epam.business.exception.EntityIdNotFoundException;
 import com.epam.business.exception.EntityNameNotFoundException;
 import com.epam.business.model.dto.GiftCertificateDto;
 import com.epam.business.model.request.CreateGiftCertificateRequest;
+import com.epam.business.model.request.TagRequest;
 import com.epam.business.model.request.UpdateGiftCertificateRequest;
 import com.epam.lib.constants.SortType;
 import java.util.Set;
@@ -26,6 +27,7 @@ public interface GiftCertificateService {
 
     GiftCertificateDto updateById(Long id, UpdateGiftCertificateRequest request) throws EntityIdNotFoundException;
 
-    GiftCertificateDto untag(Long id, Set<String> tags);
+    GiftCertificateDto untag(Long id, Set<TagRequest> tags);
 
+    GiftCertificateDto addTags(Long id, Set<TagRequest> tags);
 }

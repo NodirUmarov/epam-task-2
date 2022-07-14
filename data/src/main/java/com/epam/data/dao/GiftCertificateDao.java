@@ -80,4 +80,16 @@ public interface GiftCertificateDao extends BaseDao<Long, GiftCertificateEntity>
      * @since 0.1.0
      */
     GiftCertificateEntity untagCertificate(Long id, Set<String> tags) throws IllegalArgumentException;
+
+    /**
+     * <p>Returns an instances of the type {@link TagEntity} after adding tags.
+     *
+     * @param id   must not be null nor negative or zero values
+     * @param tags elements must not be null
+     * @return updated entity
+     * @throws IllegalArgumentException if arguments or one of the argument is null, or id is zero or negative
+     * @since 0.1.0
+     */
+    GiftCertificateEntity addTag(Long id, Set<String> tags) throws IllegalArgumentException;
+
 }

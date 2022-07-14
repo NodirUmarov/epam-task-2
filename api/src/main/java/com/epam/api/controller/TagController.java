@@ -1,6 +1,6 @@
 package com.epam.api.controller;
 
-import com.epam.business.model.request.CreateTagRequest;
+import com.epam.business.model.request.TagRequest;
 import com.epam.business.service.TagService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -29,10 +29,10 @@ public class TagController {
 
     @PostMapping
     @ApiOperation(value = "Create tags", notes = "This method creates all tags provided and returns them with their IDs as response")
-    public ResponseEntity<?> create(@RequestBody Set<CreateTagRequest> createTagRequest) {
+    public ResponseEntity<?> create(@RequestBody Set<TagRequest> tagRequest) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(tagService.create(createTagRequest));
+                .body(tagService.create(tagRequest));
     }
 
     @DeleteMapping("/{id}")

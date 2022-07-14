@@ -49,5 +49,5 @@ public class CreateGiftCertificateRequest {
     @ApiModelProperty(value = "Names of tags that gift certificate has",
             name = "tags",
             position = 4)
-    private Set<CreateTagRequest> tags;
+    private Set<TagRequest> tags;
 }

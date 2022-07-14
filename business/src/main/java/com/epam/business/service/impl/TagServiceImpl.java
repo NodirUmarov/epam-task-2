@@ -3,7 +3,7 @@ package com.epam.business.service.impl;
 import com.epam.business.mapper.dto.TagMapper;
 import com.epam.business.mapper.requestMapper.CreateTagMapper;
 import com.epam.business.model.dto.TagDto;
-import com.epam.business.model.request.CreateTagRequest;
+import com.epam.business.model.request.TagRequest;
 import com.epam.business.service.TagService;
 import com.epam.data.dao.TagDao;
 import com.epam.data.model.entity.TagEntity;
@@ -25,7 +25,7 @@ public class TagServiceImpl implements TagService {
     private final CreateTagMapper createTagMapper;
 
     @Override
-    public Set<TagDto> create(Set<CreateTagRequest> tags) {
+    public Set<TagDto> create(Set<TagRequest> tags) {
         Set<TagEntity> tagEntitySet = createTagMapper.toEntitySet(tags);
 
         tagEntitySet = tagDao.saveAll(tagEntitySet);

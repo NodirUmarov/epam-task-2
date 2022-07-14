@@ -1,6 +1,6 @@
 package com.epam.business.service.provider;
 
-import com.epam.business.model.request.CreateTagRequest;
+import com.epam.business.model.request.TagRequest;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.ArgumentsProvider;
@@ -22,12 +22,12 @@ public class CreateTagProvider implements ArgumentsProvider {
                 .map(Arguments::of);
     }
 
-    public static List<Set<CreateTagRequest>> entities() {
-        List<Set<CreateTagRequest>> listOfRequest = new ArrayList<>();
+    public static List<Set<TagRequest>> entities() {
+        List<Set<TagRequest>> listOfRequest = new ArrayList<>();
         for (int i = 1; i <= 50; i++) {
-            Set<CreateTagRequest> requests = new LinkedHashSet<>();
+            Set<TagRequest> requests = new LinkedHashSet<>();
             for (int j = 1; j <= 50; j++) {
-                CreateTagRequest request = new CreateTagRequest();
+                TagRequest request = new TagRequest();
                 request.setName("Tag #" + i + "." + j);
                 requests.add(request);
             }

@@ -1,6 +1,8 @@
 package com.epam.api.controller;
 
+import com.epam.api.model.Operation;
 import com.epam.business.model.request.CreateGiftCertificateRequest;
+import com.epam.business.model.request.TagRequest;
 import com.epam.business.model.request.UpdateGiftCertificateRequest;
 import com.epam.business.service.GiftCertificateService;
 import com.epam.lib.constants.SortType;
@@ -60,7 +62,7 @@ public class GiftCertificateController {
                         .create(request));
     }
 
-    @PutMapping("/{id}")
+    @PatchMapping(value = "/{id}")
     @ApiOperation(value = "Update gift-certificate", notes = "This method updates only changed fields.")
     public ResponseEntity<?> update(@PathVariable Long id,
                                     @RequestBody @Validated UpdateGiftCertificateRequest request) {
@@ -70,10 +72,19 @@ public class GiftCertificateController {
                         .updateById(id, request));
     }
 
-    @PatchMapping("/{id}")
-    @ApiOperation(value = "Untag gift-certificate", notes = "This method removes given tags from gift-certificate.")
-    public ResponseEntity<?> update(@PathVariable Long id,
-                                    @RequestBody @Validated Set<String> tags) {
+    @PatchMapping(value = "/{id}", params = {"operation"})
+    @ApiOperation(value = "Add or remove tag",
+            notes = "This method removes or adds given tags from gift-certificate. Operation depends on parameter passed")
+    public ResponseEntity<?> operationOnTags(@PathVariable Long id,
+                                   @RequestParam Operation operation,
+                                   @RequestBody @Validated Set<TagRequest> tags) {
+
+        if (operation.equals(Operation.ADD)) {
+            return ResponseEntity
+                    .accepted()
+                    .body(giftCertificateService
+                            .addTags(id, tags));
+        }
         return ResponseEntity
                 .accepted()
                 .body(giftCertificateService

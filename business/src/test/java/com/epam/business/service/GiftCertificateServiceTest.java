@@ -4,7 +4,7 @@ import com.epam.business.mapper.dto.GiftCertificateMapper;
 import com.epam.business.mapper.requestMapper.CreateGiftCertificateMapper;
 import com.epam.business.mapper.requestMapper.UpdateGiftCertificateMapper;
 import com.epam.business.model.request.CreateGiftCertificateRequest;
-import com.epam.business.model.request.CreateTagRequest;
+import com.epam.business.model.request.TagRequest;
 import com.epam.business.model.request.UpdateGiftCertificateRequest;
 import com.epam.business.service.impl.GiftCertificateServiceImpl;
 import com.epam.business.service.provider.CreateGiftCertificateProvider;
@@ -92,9 +92,9 @@ class GiftCertificateServiceTest {
     @DisplayName("Testing getByTag method")
     @ParameterizedTest
     @ArgumentsSource(CreateTagProvider.class)
-    public void getByTag(LinkedHashSet<CreateTagRequest> createTagRequests) {
+    public void getByTag(LinkedHashSet<TagRequest> tagRequests) {
         Random random = new Random();
-        String tag = createTagRequests.stream().findAny().get().getName();
+        String tag = tagRequests.stream().findAny().get().getName();
         Integer page = 1 + random.nextInt(10);
         Integer quantity = 5;
 

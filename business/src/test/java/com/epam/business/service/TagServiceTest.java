@@ -2,12 +2,11 @@ package com.epam.business.service;
 
 import com.epam.business.mapper.dto.TagMapper;
 import com.epam.business.mapper.requestMapper.CreateTagMapper;
-import com.epam.business.model.request.CreateTagRequest;
+import com.epam.business.model.request.TagRequest;
 import com.epam.business.service.impl.TagServiceImpl;
 import com.epam.business.service.provider.CreateTagProvider;
 import com.epam.data.dao.TagDao;
 import com.epam.data.model.entity.TagEntity;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -61,7 +60,7 @@ class TagServiceTest {
     @DisplayName("Should create tag")
     @ParameterizedTest
     @ArgumentsSource(CreateTagProvider.class)
-    public void shouldCreateTag(Set<CreateTagRequest> requests) {
+    public void shouldCreateTag(Set<TagRequest> requests) {
         when(createTagMapper.toEntitySet(requests)).thenReturn(requests.stream()
                 .map(request -> new TagEntity(request.getName()))
                 .collect(Collectors.toSet()));

@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Data
 @ApiModel
 @NoArgsConstructor
-public class CreateTagRequest {
+public class TagRequest {
 
     @NotBlank
     @ApiModelProperty(value = "The unique name of the tag",

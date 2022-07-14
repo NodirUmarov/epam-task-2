@@ -8,7 +8,6 @@ import com.epam.data.model.entity.GiftCertificateEntity;
 import com.epam.data.model.entity.TagEntity;
 import com.epam.lib.constants.SortType;
 import com.epam.data.exception.DataNotFoundException;
-import jdk.vm.ci.meta.Local;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -173,6 +172,21 @@ public class GiftCertificateDaoImpl implements GiftCertificateDao {
                     .addValue("tagName", tag));
         });
         setUpdateDate(id);
+        return getById(id);
+    }
+
+    @Override
+    public GiftCertificateEntity addTag(Long id, Set<String> tags) throws IllegalArgumentException {
+        Map<String, Object>[] batchInputs = new HashMap[tags.size()];
+        int index = 0;
+        for (String tag : tags) {
+            Map<String, Object> params = new HashMap<>();
+            params.put("certificateId", id);
+            params.put("name", tag);
+            batchInputs[index++] = params;
+        }
+        namedParameterJdbcTemplate.batchUpdate(INSERT_JT, batchInputs);
+
         return getById(id);
     }
 }

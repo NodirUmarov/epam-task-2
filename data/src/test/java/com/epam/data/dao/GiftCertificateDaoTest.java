@@ -1,6 +1,6 @@
 package com.epam.data.dao;
 
-import com.epam.data.config.DataConfig;
+import com.epam.data.dao.config.DataConfig;
 import com.epam.data.dao.provider.CollectorUtils;
 import com.epam.data.dao.provider.GiftCertificateProvider;
 import com.epam.data.model.entity.GiftCertificateEntity;

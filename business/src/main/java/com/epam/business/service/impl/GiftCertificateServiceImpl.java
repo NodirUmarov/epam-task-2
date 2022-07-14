@@ -7,6 +7,7 @@ import com.epam.business.mapper.requestMapper.CreateGiftCertificateMapper;
 import com.epam.business.mapper.requestMapper.UpdateGiftCertificateMapper;
 import com.epam.business.model.dto.GiftCertificateDto;
 import com.epam.business.model.request.CreateGiftCertificateRequest;
+import com.epam.business.model.request.TagRequest;
 import com.epam.business.model.request.UpdateGiftCertificateRequest;
 import com.epam.business.service.GiftCertificateService;
 import com.epam.business.service.TagService;
@@ -15,6 +16,8 @@ import com.epam.data.model.entity.GiftCertificateEntity;
 import com.epam.lib.constants.SortType;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -75,7 +78,15 @@ public class GiftCertificateServiceImpl implements GiftCertificateService {
     }
 
     @Override
-    public GiftCertificateDto untag(Long id, Set<String> tags) {
-        return giftCertificateMapper.toDto(giftCertificateDao.untagCertificate(id, tags));
+    public GiftCertificateDto untag(Long id, Set<TagRequest> tags) {
+        return giftCertificateMapper.toDto(giftCertificateDao
+                .untagCertificate(id, tags.stream().map(TagRequest::getName).collect(Collectors.toSet())));
+    }
+
+    @Override
+    public GiftCertificateDto addTags(Long id, Set<TagRequest> tags) {
+        tagService.create(tags);
+        GiftCertificateEntity entity = giftCertificateDao.addTag(id, tags.stream().map(TagRequest::getName).collect(Collectors.toSet()));
+        return giftCertificateMapper.toDto(entity);
     }
 }
