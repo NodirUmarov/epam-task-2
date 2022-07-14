@@ -3,11 +3,14 @@ package com.epam.data.dao.impl;
 import com.epam.data.dao.extractor.GiftCertificateResultSetExtractor;
 import com.epam.data.dao.GiftCertificateDao;
 import com.epam.data.dao.impl.query.GiftCertificateQuery;
+import com.epam.data.exception.DuplicateEntityException;
 import com.epam.data.model.entity.GiftCertificateEntity;
 import com.epam.data.model.entity.TagEntity;
 import com.epam.lib.constants.SortType;
 import com.epam.data.exception.DataNotFoundException;
+import jdk.vm.ci.meta.Local;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -19,16 +22,7 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.*;
 
-import static com.epam.data.dao.impl.query.GiftCertificateQuery.INSERT;
-import static com.epam.data.dao.impl.query.GiftCertificateQuery.INSERT_JT;
-import static com.epam.data.dao.impl.query.GiftCertificateQuery.SELECT_BY_ID;
-import static com.epam.data.dao.impl.query.GiftCertificateQuery.UNTAG_CERTIFICATE;
-import static com.epam.data.dao.impl.query.GiftCertificateQuery.DELETE_BY_ID;
-import static com.epam.data.dao.impl.query.GiftCertificateQuery.DELETE_BY_ID_JT;
-import static com.epam.data.dao.impl.query.GiftCertificateQuery.SELECT_BY_NAME;
-import static com.epam.data.dao.impl.query.GiftCertificateQuery.SELECT_BY_NAME_ORD;
-import static com.epam.data.dao.impl.query.GiftCertificateQuery.SELECT_EXISTS;
-import static com.epam.data.dao.impl.query.GiftCertificateQuery.UPDATE_BY_ID;
+import static com.epam.data.dao.impl.query.GiftCertificateQuery.*;
 
 
 /**
@@ -84,18 +78,22 @@ public class GiftCertificateDaoImpl implements GiftCertificateDao {
     private GiftCertificateEntity saveNew(GiftCertificateEntity giftCertificateEntity) {
         KeyHolder holder = new GeneratedKeyHolder();
         giftCertificateEntity.setCreateDate(LocalDateTime.now());
-        namedParameterJdbcTemplate.update(INSERT, new MapSqlParameterSource()
-                        .addValue("name", giftCertificateEntity.getName())
-                        .addValue("price", giftCertificateEntity.getPrice())
-                        .addValue("duration", giftCertificateEntity.getDuration())
-                        .addValue("description", giftCertificateEntity.getDescription())
-                        .addValue("createDate", giftCertificateEntity.getCreateDate()),
-                holder,
-                new String[]{"id" });
-        giftCertificateEntity.setId(Objects.requireNonNull(holder.getKey()).longValue());
-        saveToJunctionTable(giftCertificateEntity, giftCertificateEntity.getTags());
+        try {
+            namedParameterJdbcTemplate.update(INSERT, new MapSqlParameterSource()
+                            .addValue("name", giftCertificateEntity.getName())
+                            .addValue("price", giftCertificateEntity.getPrice())
+                            .addValue("duration", giftCertificateEntity.getDuration())
+                            .addValue("description", giftCertificateEntity.getDescription())
+                            .addValue("createDate", giftCertificateEntity.getCreateDate()),
+                    holder,
+                    new String[]{"id"});
+            giftCertificateEntity.setId(Objects.requireNonNull(holder.getKey()).longValue());
+            saveToJunctionTable(giftCertificateEntity, giftCertificateEntity.getTags());
 
-        return getById(giftCertificateEntity.getId());
+            return getById(giftCertificateEntity.getId());
+        } catch (DuplicateKeyException ex) {
+            throw new DuplicateEntityException();
+        }
     }
 
     private void saveToJunctionTable(GiftCertificateEntity giftCertificateEntity, Set<TagEntity> tagEntities) {
@@ -159,6 +157,12 @@ public class GiftCertificateDaoImpl implements GiftCertificateDao {
                 new MapSqlParameterSource("id", id), (rs, rowNum) -> rs.getBoolean(1)));
     }
 
+    private void setUpdateDate(Long id) {
+        namedParameterJdbcTemplate.update(INSERT_LAST_UPDATE_DATE, new MapSqlParameterSource()
+                .addValue("date", LocalDateTime.now())
+                .addValue("id", id));
+    }
+
     @Override
     public GiftCertificateEntity untagCertificate(Long id, Set<String> tags) throws IllegalArgumentException {
         checkForNull(id);
@@ -168,6 +172,7 @@ public class GiftCertificateDaoImpl implements GiftCertificateDao {
                     .addValue("certificateId", id)
                     .addValue("tagName", tag));
         });
+        setUpdateDate(id);
         return getById(id);
     }
 }

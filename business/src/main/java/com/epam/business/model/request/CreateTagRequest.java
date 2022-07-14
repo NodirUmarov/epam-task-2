@@ -17,7 +17,6 @@ public class CreateTagRequest {
     @NotBlank
     @ApiModelProperty(value = "The unique name of the tag",
             name = "name",
-            dataType = "String",
             required = true)
     private String name;
 

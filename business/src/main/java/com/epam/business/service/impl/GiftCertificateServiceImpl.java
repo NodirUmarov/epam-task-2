@@ -73,4 +73,9 @@ public class GiftCertificateServiceImpl implements GiftCertificateService {
         }
         return giftCertificateMapper.toDto(entity);
     }
+
+    @Override
+    public GiftCertificateDto untag(Long id, Set<String> tags) {
+        return giftCertificateMapper.toDto(giftCertificateDao.untagCertificate(id, tags));
+    }
 }

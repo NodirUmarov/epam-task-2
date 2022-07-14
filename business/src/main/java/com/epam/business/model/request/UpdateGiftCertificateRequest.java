@@ -16,34 +16,25 @@ import lombok.NoArgsConstructor;
 public class UpdateGiftCertificateRequest {
 
     @ApiModelProperty(value = "The unique name of the gift certificate",
-            name = "name",
-            dataType = "String",
-            allowEmptyValue = true,
-            position = 0)
+            name = "name")
     private String name;
 
     @PositiveOrZero
     @ApiModelProperty(value = "The price of the gift certificate",
             name = "price",
-            dataType = "BigDecimal",
             allowableValues = "[0, infinity]",
-            allowEmptyValue = true,
             position = 1)
     private BigDecimal price;
 
     @PositiveOrZero
     @ApiModelProperty(value = "Duration of the gift certificate in days",
             name = "duration",
-            dataType = "Long",
             allowableValues = "[0, infinity]",
-            allowEmptyValue = true,
             position = 2)
     private Long duration;
 
     @ApiModelProperty(value = "Description of the gift certificate",
             name = "description",
-            dataType = "String",
-            allowEmptyValue = true,
             position = 3)
     private String description;
 }

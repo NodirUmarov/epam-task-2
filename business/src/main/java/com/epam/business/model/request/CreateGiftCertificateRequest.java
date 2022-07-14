@@ -21,16 +21,13 @@ public class CreateGiftCertificateRequest {
     @NotBlank
     @ApiModelProperty(value = "The unique name of the gift certificate",
             name = "name",
-            dataType = "String",
-            required = true,
-            position = 0)
+            required = true)
     private String name;
 
     @NotNull
     @PositiveOrZero
     @ApiModelProperty(value = "The price of the gift certificate",
             name = "price",
-            dataType = "BigDecimal",
             required = true,
             allowableValues = "[0, infinity]",
             position = 1)
@@ -39,7 +36,6 @@ public class CreateGiftCertificateRequest {
     @PositiveOrZero
     @ApiModelProperty(value = "Duration of the gift certificate in days",
             name = "duration",
-            dataType = "Long",
             allowableValues = "[0, infinity]",
             required = true,
             position = 2)
@@ -47,15 +43,11 @@ public class CreateGiftCertificateRequest {
 
     @ApiModelProperty(value = "Description of the gift certificate",
             name = "description",
-            dataType = "String",
-            allowEmptyValue = true,
             position = 3)
     private String description;
 
     @ApiModelProperty(value = "Names of tags that gift certificate has",
             name = "tags",
-            dataType = "Set",
-            allowEmptyValue = true,
             position = 4)
     private Set<CreateTagRequest> tags;
 }

@@ -50,7 +50,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(EntityExistsException.class)
     protected ResponseEntity<Object> handleEntityExists() {
-        return buildResponseEntity(generateApiError(responseMessages.cannotDelete, HttpStatus.NOT_ACCEPTABLE));
+        return buildResponseEntity(generateApiError(responseMessages.duplicateData, HttpStatus.NOT_ACCEPTABLE));
     }
 
     private ResponseEntity<Object> buildResponseEntity(EndPointErrorResponse apiErrorModel) {

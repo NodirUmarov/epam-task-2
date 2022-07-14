@@ -56,5 +56,8 @@ public class GiftCertificateQuery {
             "WHERE tag_id IN (SELECT id FROM tb_tags t WHERE t.name IN (:tagName)) " +
             "AND gift_certificate_id IN (:certificateId)";
 
-
+    public static final String INSERT_LAST_UPDATE_DATE = "" +
+            "UPDATE tb_gift_certificates " +
+            "SET last_update_date = (:date) " +
+            "WHERE id IN (:id)";
 }

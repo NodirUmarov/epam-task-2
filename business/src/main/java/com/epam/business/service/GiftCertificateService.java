@@ -26,4 +26,6 @@ public interface GiftCertificateService {
 
     GiftCertificateDto updateById(Long id, UpdateGiftCertificateRequest request) throws EntityIdNotFoundException;
 
+    GiftCertificateDto untag(Long id, Set<String> tags);
+
 }

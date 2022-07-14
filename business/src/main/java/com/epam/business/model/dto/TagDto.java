@@ -13,14 +13,12 @@ public class TagDto implements Serializable {
 
     @ApiModelProperty(value = "The generated ID when saved in database",
             name = "ID",
-            dataType = "Long",
             allowableValues = "[1, infinity]",
             required = true)
     private final Long id;
 
     @ApiModelProperty(value = "The unique name of the tag",
             name = "name",
-            dataType = "String",
             required = true,
             position = 1)
     private final String name;

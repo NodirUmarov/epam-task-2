@@ -13,10 +13,7 @@ import org.springframework.stereotype.Component;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Implementation of callback interface used by {@link JdbcTemplate}'s query methods.
@@ -61,7 +58,7 @@ public class GiftCertificateResultSetExtractor implements ResultSetExtractor<Lis
         GiftCertificateRowMapper mapper = new GiftCertificateRowMapper();
 
         long prevId = -1L;
-        GiftCertificateEntity entity = null;
+        GiftCertificateEntity entity;
         Set<TagEntity> tags = null;
 
         while (rs.next()) {
@@ -69,14 +66,26 @@ public class GiftCertificateResultSetExtractor implements ResultSetExtractor<Lis
                 prevId = rs.getLong(1);
                 entity = mapper.mapRow(rs, 1);
                 tags = new HashSet<>();
+
+                assert entity != null;
                 entity.setTags(tags);
+
                 entities.add(entity);
             }
+
+            assert tags != null;
             tags.add(TagEntity
                     .builder()
                     .id(rs.getLong(10))
                     .name(rs.getString(11))
                     .build());
+        }
+
+        assert tags != null;
+        Iterator<TagEntity> iterator = tags.iterator();
+
+        if (iterator.hasNext() && iterator.next().getId() == 0) {
+            iterator.remove();
         }
 
         return entities;
