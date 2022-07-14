@@ -36,7 +36,6 @@ war {
     classpath fileTree('src/main/resources')
 }
 
-
 test {
     useJUnitPlatform()
 }
