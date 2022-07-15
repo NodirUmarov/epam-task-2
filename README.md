@@ -2,7 +2,7 @@
 
 # Table of Contents
 
-* [Used technologies](#Used technologies)
+* [Used technologies](#Used-technologies)
 * [How to use this repository](#how-to-use-this-repository)
 
 # Used technologies
