@@ -37,12 +37,13 @@ public class TagServiceImpl implements TagService {
         return tagMapper.toDtoSet(tagDao.findAllSorted(quantity, getOffset(quantity, page)));
     }
 
-    private Integer getOffset(Integer quantity, Integer page) {
-        return (page - 1) * quantity;
-    }
-
     @Override
     public void deleteById(Long id) {
         tagDao.deleteById(id);
     }
+
+    private Integer getOffset(Integer quantity, Integer page) {
+        return (page - 1) * quantity;
+    }
+
 }

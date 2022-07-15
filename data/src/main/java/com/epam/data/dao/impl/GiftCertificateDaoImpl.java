@@ -36,14 +36,6 @@ public class GiftCertificateDaoImpl implements GiftCertificateDao {
     private final GiftCertificateResultSetExtractor giftCertificateResultSetExtractor;
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-    private <T> void checkForNull(T... object) {
-        for (T t : object) {
-            if (t == null) {
-                throw new IllegalArgumentException();
-            }
-        }
-    }
-
     @Override
     public Optional<GiftCertificateEntity> findById(Long id) throws IllegalArgumentException {
         checkForNull(id);
@@ -72,6 +64,68 @@ public class GiftCertificateDaoImpl implements GiftCertificateDao {
         } else {
             return saveNew(giftCertificateEntity);
         }
+    }
+
+    @Override
+    public void deleteById(Long id) throws IllegalArgumentException {
+        checkForNull(id);
+        namedParameterJdbcTemplate.update(DELETE_BY_ID_JT, new MapSqlParameterSource("certificateId", id));
+        namedParameterJdbcTemplate.update(DELETE_BY_ID, new MapSqlParameterSource("id", id));
+    }
+
+    @Override
+    public Optional<GiftCertificateEntity> findByName(String name) throws IllegalArgumentException {
+        checkForNull(name);
+        return Objects.requireNonNull(namedParameterJdbcTemplate
+                        .query(SELECT_BY_NAME, new MapSqlParameterSource("name", name), giftCertificateResultSetExtractor))
+                .stream()
+                .findFirst();
+    }
+
+    @Override
+    public List<GiftCertificateEntity> findByTag(String tag, Integer limit, Integer offset, SortType sortType) throws IllegalArgumentException {
+        checkForNull(tag, limit, offset, sortType);
+        GiftCertificateQuery.order = sortType.getValue();
+        return namedParameterJdbcTemplate.query(SELECT_BY_NAME_ORD, new MapSqlParameterSource()
+                        .addValue("tagName", tag)
+                        .addValue("limit", limit)
+                        .addValue("offset", offset),
+                giftCertificateResultSetExtractor);
+    }
+
+    @Override
+    public boolean existsById(Long id) throws IllegalArgumentException {
+        checkForNull(id);
+        return Boolean.TRUE.equals(namedParameterJdbcTemplate.queryForObject(SELECT_EXISTS,
+                new MapSqlParameterSource("id", id), (rs, rowNum) -> rs.getBoolean(1)));
+    }
+
+    @Override
+    public GiftCertificateEntity untagCertificate(Long id, Set<String> tags) throws IllegalArgumentException {
+        checkForNull(id);
+        tags.forEach(tag -> {
+            checkForNull(tag);
+            namedParameterJdbcTemplate.update(UNTAG_CERTIFICATE, new MapSqlParameterSource()
+                    .addValue("certificateId", id)
+                    .addValue("tagName", tag));
+        });
+        setUpdateDate(id);
+        return getById(id);
+    }
+
+    @Override
+    public GiftCertificateEntity addTag(Long id, Set<String> tags) throws IllegalArgumentException {
+        Map<String, Object>[] batchInputs = new HashMap[tags.size()];
+        int index = 0;
+        for (String tag : tags) {
+            Map<String, Object> params = new HashMap<>();
+            params.put("certificateId", id);
+            params.put("name", tag);
+            batchInputs[index++] = params;
+        }
+        namedParameterJdbcTemplate.batchUpdate(INSERT_JT, batchInputs);
+
+        return getById(id);
     }
 
     private GiftCertificateEntity saveNew(GiftCertificateEntity giftCertificateEntity) {
@@ -122,71 +176,17 @@ public class GiftCertificateDaoImpl implements GiftCertificateDao {
         return getById(giftCertificateEntity.getId());
     }
 
-    @Override
-    public void deleteById(Long id) throws IllegalArgumentException {
-        checkForNull(id);
-        namedParameterJdbcTemplate.update(DELETE_BY_ID_JT, new MapSqlParameterSource("certificateId", id));
-        namedParameterJdbcTemplate.update(DELETE_BY_ID, new MapSqlParameterSource("id", id));
-    }
-
-    @Override
-    public Optional<GiftCertificateEntity> findByName(String name) throws IllegalArgumentException {
-        checkForNull(name);
-        return Objects.requireNonNull(namedParameterJdbcTemplate
-                        .query(SELECT_BY_NAME, new MapSqlParameterSource("name", name), giftCertificateResultSetExtractor))
-                .stream()
-                .findFirst();
-    }
-
-    @Override
-    public List<GiftCertificateEntity> findByTag(String tag, Integer limit, Integer offset, SortType sortType) throws IllegalArgumentException {
-        checkForNull(tag, limit, offset, sortType);
-        GiftCertificateQuery.order = sortType.getValue();
-        return namedParameterJdbcTemplate.query(SELECT_BY_NAME_ORD, new MapSqlParameterSource()
-                        .addValue("tagName", tag)
-                        .addValue("limit", limit)
-                        .addValue("offset", offset),
-                giftCertificateResultSetExtractor);
-    }
-
-    @Override
-    public boolean existsById(Long id) throws IllegalArgumentException {
-        checkForNull(id);
-        return Boolean.TRUE.equals(namedParameterJdbcTemplate.queryForObject(SELECT_EXISTS,
-                new MapSqlParameterSource("id", id), (rs, rowNum) -> rs.getBoolean(1)));
-    }
-
     private void setUpdateDate(Long id) {
         namedParameterJdbcTemplate.update(INSERT_LAST_UPDATE_DATE, new MapSqlParameterSource()
                 .addValue("date", LocalDateTime.now())
                 .addValue("id", id));
     }
 
-    @Override
-    public GiftCertificateEntity untagCertificate(Long id, Set<String> tags) throws IllegalArgumentException {
-        checkForNull(id);
-        tags.forEach(tag -> {
-            checkForNull(tag);
-            namedParameterJdbcTemplate.update(UNTAG_CERTIFICATE, new MapSqlParameterSource()
-                    .addValue("certificateId", id)
-                    .addValue("tagName", tag));
-        });
-        setUpdateDate(id);
-        return getById(id);
-    }
-
-    @Override
-    public GiftCertificateEntity addTag(Long id, Set<String> tags) throws IllegalArgumentException {
-        Map<String, Object>[] batchInputs = new HashMap[tags.size()];
-        int index = 0;
-        for (String tag : tags) {
-            Map<String, Object> params = new HashMap<>();
-            params.put("certificateId", id);
-            params.put("name", tag);
-            batchInputs[index++] = params;
+    private <T> void checkForNull(T... object) {
+        for (T t : object) {
+            if (t == null) {
+                throw new IllegalArgumentException();
+            }
         }
-        namedParameterJdbcTemplate.batchUpdate(INSERT_JT, batchInputs);
-
-        return getById(id);
     }
 }
