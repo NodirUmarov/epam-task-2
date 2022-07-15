@@ -102,3 +102,26 @@ Don't forget to update your remote `main`:
 ```shell script
 $ git push origin main
 ```
+
+Final step to get you project work is to add .env files
+```shell script
+$ cat > data/src/main/resources/.env
+DRIVER=Your JDBC Driver
+URL=Your Database URL
+USER=Your Username
+PASSWORD=Your Password
+SCHEMA=public
+```
+and
+
+```shell script
+$ cat > data/src/test/resources/.env
+DRIVER=Your JDBC Test Driver
+URL=Your Test Database URL
+USER=Your Username For Test Database
+PASSWORD=Your Password For Test Database
+SCHEMA=Your Schema For Test Database
+```
+
+To make .env file work install [EnvFile](https://plugins.jetbrains.com/plugin/7861-envfile) plugin and in application configurations enable it as shown below
+[<img alt="alt_text" width="40px" src="images/image.PNG" />](https://plugins.jetbrains.com/files/7861/screenshot_19713.png)
