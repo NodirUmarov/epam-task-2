@@ -1,0 +1,597 @@
+INSERT INTO gift_certificate_has_tag (gift_certificate_id,tag_id)
+VALUES
+    (149,14),
+    (56,25),
+    (259,73),
+    (198,93),
+    (55,56),
+    (368,78),
+    (91,93),
+    (337,48),
+    (368,2),
+    (64,2);
+INSERT INTO gift_certificate_has_tag (gift_certificate_id,tag_id)
+VALUES
+    (302,20),
+    (219,60),
+    (400,78),
+    (244,83),
+    (239,92),
+    (425,8),
+    (116,76),
+    (457,41),
+    (426,29),
+    (95,49);
+INSERT INTO gift_certificate_has_tag (gift_certificate_id,tag_id)
+VALUES
+    (353,66),
+    (302,90),
+    (317,100),
+    (164,84),
+    (405,46),
+    (421,60),
+    (186,68),
+    (69,67),
+    (327,22),
+    (464,34);
+INSERT INTO gift_certificate_has_tag (gift_certificate_id,tag_id)
+VALUES
+    (399,92),
+    (205,93),
+    (332,84),
+    (135,50),
+    (292,55),
+    (238,54),
+    (96,52),
+    (60,5),
+    (489,86),
+    (121,74);
+INSERT INTO gift_certificate_has_tag (gift_certificate_id,tag_id)
+VALUES
+    (308,85),
+    (121,51),
+    (421,36),
+    (365,77),
+    (460,93),
+    (422,45),
+    (469,32),
+    (58,37),
+    (181,58),
+    (81,43);
+INSERT INTO gift_certificate_has_tag (gift_certificate_id,tag_id)
+VALUES
+    (266,85),
+    (419,92),
+    (362,80),
+    (275,72),
+    (32,44),
+    (281,36),
+    (435,41),
+    (265,27),
+    (410,42),
+    (102,15);
+INSERT INTO gift_certificate_has_tag (gift_certificate_id,tag_id)
+VALUES
+    (56,69),
+    (136,49),
+    (467,61),
+    (74,43),
+    (287,13),
+    (202,41),
+    (66,44),
+    (115,53),
+    (78,63),
+    (269,24);
+INSERT INTO gift_certificate_has_tag (gift_certificate_id,tag_id)
+VALUES
+    (301,11),
+    (406,38),
+    (119,65),
+    (123,71),
+    (427,83),
+    (35,62),
+    (234,40),
+    (45,27),
+    (302,68),
+    (456,84);
+INSERT INTO gift_certificate_has_tag (gift_certificate_id,tag_id)
+VALUES
+    (179,68),
+    (33,70),
+    (377,80),
+    (349,26),
+    (243,62),
+    (171,5),
+    (139,64),
+    (236,67),
+    (169,11),
+    (332,61);
+INSERT INTO gift_certificate_has_tag (gift_certificate_id,tag_id)
+VALUES
+    (183,48),
+    (100,73),
+    (264,95),
+    (18,30),
+    (282,19),
+    (283,86),
+    (494,75),
+    (212,53),
+    (189,13),
+    (358,92);
+INSERT INTO gift_certificate_has_tag (gift_certificate_id,tag_id)
+VALUES
+    (367,37),
+    (166,82),
+    (154,3),
+    (356,43),
+    (311,88),
+    (268,78),
+    (391,35),
+    (410,60),
+    (29,78),
+    (171,59);
+INSERT INTO gift_certificate_has_tag (gift_certificate_id,tag_id)
+VALUES
+    (221,31),
+    (16,10),
+    (328,21),
+    (16,82),
+    (201,79),
+    (302,82),
+    (93,73),
+    (350,65),
+    (219,28),
+    (151,14);
+INSERT INTO gift_certificate_has_tag (gift_certificate_id,tag_id)
+VALUES
+    (127,55),
+    (254,71),
+    (474,69),
+    (73,16),
+    (464,88),
+    (171,66),
+    (53,34),
+    (188,53),
+    (383,54),
+    (258,97);
+INSERT INTO gift_certificate_has_tag (gift_certificate_id,tag_id)
+VALUES
+    (22,90),
+    (336,50),
+    (290,82),
+    (13,21),
+    (383,29),
+    (91,55),
+    (184,56),
+    (436,92),
+    (357,95),
+    (72,47);
+INSERT INTO gift_certificate_has_tag (gift_certificate_id,tag_id)
+VALUES
+    (441,64),
+    (61,3),
+    (162,12),
+    (382,90),
+    (123,62),
+    (388,63),
+    (291,35),
+    (113,77),
+    (157,49),
+    (232,18);
+INSERT INTO gift_certificate_has_tag (gift_certificate_id,tag_id)
+VALUES
+    (150,50),
+    (405,80),
+    (21,53),
+    (81,12),
+    (209,14),
+    (20,54),
+    (24,6),
+    (452,36),
+    (351,94),
+    (408,12);
+INSERT INTO gift_certificate_has_tag (gift_certificate_id,tag_id)
+VALUES
+    (239,33),
+    (410,7),
+    (474,20),
+    (52,99),
+    (418,93),
+    (32,83),
+    (84,31),
+    (16,55),
+    (285,47),
+    (391,77);
+INSERT INTO gift_certificate_has_tag (gift_certificate_id,tag_id)
+VALUES
+    (497,15),
+    (314,85),
+    (155,66),
+    (469,16),
+    (359,90),
+    (476,54),
+    (396,17),
+    (153,96),
+    (35,91),
+    (421,44);
+INSERT INTO gift_certificate_has_tag (gift_certificate_id,tag_id)
+VALUES
+    (274,3),
+    (163,99),
+    (106,47),
+    (419,65),
+    (214,89),
+    (137,80),
+    (44,21),
+    (196,50),
+    (191,7),
+    (165,36);
+INSERT INTO gift_certificate_has_tag (gift_certificate_id,tag_id)
+VALUES
+    (485,58),
+    (493,17),
+    (31,45),
+    (382,77),
+    (323,98),
+    (128,11),
+    (415,95),
+    (254,99),
+    (479,89),
+    (432,52);
+INSERT INTO gift_certificate_has_tag (gift_certificate_id,tag_id)
+VALUES
+    (303,29),
+    (267,58),
+    (126,46),
+    (374,9),
+    (87,72),
+    (325,44),
+    (47,75),
+    (142,14),
+    (28,87),
+    (216,60);
+INSERT INTO gift_certificate_has_tag (gift_certificate_id,tag_id)
+VALUES
+    (66,16),
+    (206,15),
+    (208,87),
+    (138,19),
+    (62,93),
+    (111,6),
+    (300,75),
+    (319,54),
+    (144,24),
+    (224,93);
+INSERT INTO gift_certificate_has_tag (gift_certificate_id,tag_id)
+VALUES
+    (266,18),
+    (21,59),
+    (406,70),
+    (144,72),
+    (495,61),
+    (483,12),
+    (14,94),
+    (1,20),
+    (71,23),
+    (470,23);
+INSERT INTO gift_certificate_has_tag (gift_certificate_id,tag_id)
+VALUES
+    (282,65),
+    (463,22),
+    (429,82),
+    (32,6),
+    (235,47),
+    (42,43),
+    (165,91),
+    (227,45),
+    (100,47),
+    (19,88);
+INSERT INTO gift_certificate_has_tag (gift_certificate_id,tag_id)
+VALUES
+    (181,23),
+    (222,62),
+    (229,47),
+    (330,3),
+    (442,74),
+    (342,80),
+    (403,10),
+    (167,70),
+    (221,80),
+    (153,79);
+INSERT INTO gift_certificate_has_tag (gift_certificate_id,tag_id)
+VALUES
+    (202,23),
+    (39,20),
+    (133,58),
+    (88,72),
+    (135,3),
+    (9,48),
+    (355,56),
+    (161,55),
+    (226,24),
+    (200,85);
+INSERT INTO gift_certificate_has_tag (gift_certificate_id,tag_id)
+VALUES
+    (42,71),
+    (157,80),
+    (462,19),
+    (339,19),
+    (364,81),
+    (341,85),
+    (429,63),
+    (353,57),
+    (250,50),
+    (413,56);
+INSERT INTO gift_certificate_has_tag (gift_certificate_id,tag_id)
+VALUES
+    (144,62),
+    (197,29),
+    (332,2),
+    (273,54),
+    (52,89),
+    (437,10),
+    (82,24),
+    (65,10),
+    (464,39),
+    (158,5);
+INSERT INTO gift_certificate_has_tag (gift_certificate_id,tag_id)
+VALUES
+    (351,4),
+    (299,36),
+    (179,38),
+    (304,45),
+    (309,20),
+    (460,37),
+    (364,43),
+    (366,36),
+    (454,13),
+    (63,86);
+INSERT INTO gift_certificate_has_tag (gift_certificate_id,tag_id)
+VALUES
+    (72,48),
+    (11,17),
+    (8,9),
+    (249,73),
+    (462,56),
+    (291,37),
+    (234,33),
+    (199,24),
+    (469,56),
+    (300,94);
+INSERT INTO gift_certificate_has_tag (gift_certificate_id,tag_id)
+VALUES
+    (203,29),
+    (334,39),
+    (168,25),
+    (408,34),
+    (319,14),
+    (143,31),
+    (326,46),
+    (218,80),
+    (370,5),
+    (245,24);
+INSERT INTO gift_certificate_has_tag (gift_certificate_id,tag_id)
+VALUES
+    (158,23),
+    (41,16),
+    (428,69),
+    (344,13),
+    (95,39),
+    (406,21),
+    (193,67),
+    (306,59),
+    (446,72),
+    (153,66);
+INSERT INTO gift_certificate_has_tag (gift_certificate_id,tag_id)
+VALUES
+    (122,67),
+    (289,18),
+    (408,95),
+    (204,64),
+    (214,83),
+    (197,46),
+    (243,17),
+    (57,93),
+    (217,54),
+    (500,92);
+INSERT INTO gift_certificate_has_tag (gift_certificate_id,tag_id)
+VALUES
+    (38,86),
+    (255,50),
+    (391,91),
+    (212,98),
+    (440,7),
+    (158,15),
+    (128,64),
+    (194,33),
+    (310,21),
+    (133,24);
+INSERT INTO gift_certificate_has_tag (gift_certificate_id,tag_id)
+VALUES
+    (396,71),
+    (20,56),
+    (100,89),
+    (25,79),
+    (349,32),
+    (284,63),
+    (194,26),
+    (10,62),
+    (463,81),
+    (251,60);
+INSERT INTO gift_certificate_has_tag (gift_certificate_id,tag_id)
+VALUES
+    (377,53),
+    (444,32),
+    (207,23),
+    (363,96),
+    (418,65),
+    (478,29),
+    (55,61),
+    (5,66),
+    (232,7),
+    (274,63);
+INSERT INTO gift_certificate_has_tag (gift_certificate_id,tag_id)
+VALUES
+    (63,45),
+    (124,84),
+    (400,73),
+    (317,45),
+    (11,4),
+    (265,51),
+    (234,50),
+    (315,49),
+    (491,48),
+    (285,62);
+INSERT INTO gift_certificate_has_tag (gift_certificate_id,tag_id)
+VALUES
+    (451,38),
+    (116,100),
+    (163,86),
+    (465,25),
+    (83,90),
+    (434,22),
+    (429,19),
+    (376,53),
+    (32,71),
+    (74,22);
+INSERT INTO gift_certificate_has_tag (gift_certificate_id,tag_id)
+VALUES
+    (240,64),
+    (323,95),
+    (241,76),
+    (42,12),
+    (392,89),
+    (257,87),
+    (404,53),
+    (16,47),
+    (330,62);
+INSERT INTO gift_certificate_has_tag (gift_certificate_id,tag_id)
+VALUES
+    (188,92),
+    (261,25),
+    (494,61),
+    (451,93),
+    (478,58),
+    (18,43),
+    (96,60),
+    (494,48),
+    (106,89),
+    (150,58);
+INSERT INTO gift_certificate_has_tag (gift_certificate_id,tag_id)
+VALUES
+    (107,40),
+    (68,59),
+    (341,5),
+    (24,35),
+    (334,62),
+    (407,71),
+    (289,87),
+    (419,10),
+    (434,46),
+    (386,20);
+INSERT INTO gift_certificate_has_tag (gift_certificate_id,tag_id)
+VALUES
+    (3,93),
+    (238,25),
+    (6,90),
+    (452,43),
+    (172,17),
+    (335,34),
+    (20,84),
+    (29,30),
+    (294,72),
+    (61,25);
+INSERT INTO gift_certificate_has_tag (gift_certificate_id,tag_id)
+VALUES
+    (314,70),
+    (43,96),
+    (242,90),
+    (182,34),
+    (150,8),
+    (312,10),
+    (357,82),
+    (379,48),
+    (205,35);
+INSERT INTO gift_certificate_has_tag (gift_certificate_id,tag_id)
+VALUES
+    (162,65),
+    (382,74),
+    (144,46),
+    (36,24),
+    (17,95),
+    (272,8),
+    (225,43),
+    (32,78),
+    (193,79),
+    (423,2);
+INSERT INTO gift_certificate_has_tag (gift_certificate_id,tag_id)
+VALUES
+    (8,16),
+    (372,47),
+    (214,87),
+    (36,57),
+    (79,87),
+    (112,85),
+    (5,62),
+    (208,79),
+    (440,60),
+    (393,55);
+INSERT INTO gift_certificate_has_tag (gift_certificate_id,tag_id)
+VALUES
+    (496,50),
+    (447,47),
+    (90,51),
+    (7,58),
+    (186,30),
+    (60,96),
+    (392,92),
+    (76,59),
+    (223,48);
+INSERT INTO gift_certificate_has_tag (gift_certificate_id,tag_id)
+VALUES
+    (256,10),
+    (487,57),
+    (488,67),
+    (471,36),
+    (420,21),
+    (143,43),
+    (204,51),
+    (459,70),
+    (168,4),
+    (151,66);
+INSERT INTO gift_certificate_has_tag (gift_certificate_id,tag_id)
+VALUES
+    (398,32),
+    (148,38),
+    (30,80),
+    (265,11),
+    (483,6),
+    (70,28),
+    (356,9),
+    (303,7),
+    (364,45),
+    (436,47);
+INSERT INTO gift_certificate_has_tag (gift_certificate_id,tag_id)
+VALUES
+    (394,47),
+    (152,50),
+    (409,32),
+    (129,8),
+    (200,9),
+    (258,4),
+    (237,94),
+    (132,31),
+    (126,40),
+    (40,99);
+INSERT INTO gift_certificate_has_tag (gift_certificate_id,tag_id)
+VALUES
+    (329,81),
+    (491,68),
+    (36,95),
+    (53,10),
+    (103,49),
+    (161,16),
+    (68,88),
+    (261,11),
+    (256,82),
+    (53,52);

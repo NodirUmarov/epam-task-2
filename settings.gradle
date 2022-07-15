@@ -1,2 +1,5 @@
 rootProject.name = 'esm'
-
+include 'data'
+include 'api'
+include 'business'
+include 'lib'

@@ -1,0 +1,23 @@
+plugins {
+    id 'esm-spring-conventions'
+}
+
+dependencies {
+    implementation project(':data')
+    implementation project(":lib")
+
+    runtimeOnly 'org.aspectj:aspectjweaver:1.9.9.1'
+    implementation 'org.aspectj:aspectjtools:1.9.9.1'
+
+    implementation 'org.springframework:spring-aop:2.5.6'
+    testImplementation "org.mockito:mockito-core:$mockitoVersion"
+    testImplementation "org.mockito:mockito-junit-jupiter:$mockitoVersion"
+    testImplementation "org.assertj:assertj-core:3.23.1"
+
+    implementation 'org.hibernate.validator:hibernate-validator:7.0.4.Final'
+    implementation "io.springfox:springfox-swagger2:$swaggerVersion"
+    implementation "org.mapstruct:mapstruct-processor:$mapstructVersion"
+    implementation "org.mapstruct:mapstruct:$mapstructVersion"
+    compileOnly "org.mapstruct:mapstruct-processor:$mapstructVersion"
+    annotationProcessor "org.mapstruct:mapstruct-processor:$mapstructVersion"
+}
