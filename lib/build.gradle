@@ -1,0 +1,7 @@
+plugins {
+    id 'esm-spring-conventions'
+}
+
+war {
+    enabled = true
+}

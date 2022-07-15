@@ -1,1 +1,5 @@
-rootProject.name = 'giftsertificates'
+rootProject.name = 'esm'
+include 'data'
+include 'api'
+include 'business'
+include 'lib'

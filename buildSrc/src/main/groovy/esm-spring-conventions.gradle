@@ -1,0 +1,41 @@
+plugins {
+    id 'java'
+    id 'idea'
+    id 'war'
+}
+
+group 'com.epam'
+version '0.1.0'
+
+sourceCompatibility = javaVersion
+targetCompatibility = javaVersion
+
+repositories {
+    mavenLocal()
+    maven { url "https://repo.spring.io/release" }
+    mavenCentral()
+}
+
+dependencies {
+
+    testImplementation "org.springframework:spring-test:$springVersion"
+    testImplementation "org.junit.jupiter:junit-jupiter-api:$testVersion"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$testVersion"
+    testImplementation "org.junit.jupiter:junit-jupiter-params:$testVersion"
+
+    testCompileOnly "org.projectlombok:lombok:$lombokVersion"
+    compileOnly "org.projectlombok:lombok:$lombokVersion"
+    testAnnotationProcessor "org.projectlombok:lombok:$lombokVersion"
+    annotationProcessor "org.projectlombok:lombok:$lombokVersion"
+    implementation "org.springframework:spring-context:$springVersion"
+
+}
+
+war {
+    enabled = true
+    classpath fileTree('src/main/resources')
+}
+
+test {
+    useJUnitPlatform()
+}
