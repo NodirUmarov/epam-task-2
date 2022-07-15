@@ -2,7 +2,7 @@ package com.epam.business.service.impl;
 
 import com.epam.business.exception.EntityIdNotFoundException;
 import com.epam.business.exception.EntityNameNotFoundException;
-import com.epam.business.mapper.dto.GiftCertificateMapper;
+import com.epam.business.mapper.dtoMapper.GiftCertificateMapper;
 import com.epam.business.mapper.requestMapper.CreateGiftCertificateMapper;
 import com.epam.business.mapper.requestMapper.UpdateGiftCertificateMapper;
 import com.epam.business.model.dto.GiftCertificateDto;

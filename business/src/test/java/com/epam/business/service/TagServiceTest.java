@@ -1,6 +1,6 @@
 package com.epam.business.service;
 
-import com.epam.business.mapper.dto.TagMapper;
+import com.epam.business.mapper.dtoMapper.TagMapper;
 import com.epam.business.mapper.requestMapper.CreateTagMapper;
 import com.epam.business.model.request.TagRequest;
 import com.epam.business.service.impl.TagServiceImpl;

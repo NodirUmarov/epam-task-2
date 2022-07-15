@@ -1,6 +1,6 @@
 package com.epam.business.service;
 
-import com.epam.business.mapper.dto.GiftCertificateMapper;
+import com.epam.business.mapper.dtoMapper.GiftCertificateMapper;
 import com.epam.business.mapper.requestMapper.CreateGiftCertificateMapper;
 import com.epam.business.mapper.requestMapper.UpdateGiftCertificateMapper;
 import com.epam.business.model.request.CreateGiftCertificateRequest;
