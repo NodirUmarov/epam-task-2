@@ -36,22 +36,6 @@ public class TagDaoImpl implements TagDao {
     private final TagRowMapper tagRowMapper;
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-    private <T> void checkForNull(T... object) {
-        if (object == null) {
-            throw new IllegalArgumentException();
-        }
-        for (T t : object) {
-            if (t == null) {
-                throw new IllegalArgumentException();
-            }
-        }
-    }
-
-    private void checkForDuplicates(TagEntity tagEntity) {
-        if (existsByName(tagEntity.getName())) {
-            throw new DuplicateEntityException();
-        }
-    }
 
     @Override
     public Optional<TagEntity> findById(Long id) throws IllegalArgumentException {
@@ -71,6 +55,7 @@ public class TagDaoImpl implements TagDao {
         return tagEntity;
     }
 
+    @Override
     public boolean existsByName(String name) {
         checkForNull(name);
         return namedParameterJdbcTemplate.query(EXISTS_BY_NAME,
@@ -117,6 +102,23 @@ public class TagDaoImpl implements TagDao {
             return entity;
         } catch (NullPointerException | IndexOutOfBoundsException ex) {
             throw new DataNotFoundException();
+        }
+    }
+
+    private <T> void checkForNull(T... object) {
+        if (object == null) {
+            throw new IllegalArgumentException();
+        }
+        for (T t : object) {
+            if (t == null) {
+                throw new IllegalArgumentException();
+            }
+        }
+    }
+
+    private void checkForDuplicates(TagEntity tagEntity) {
+        if (existsByName(tagEntity.getName())) {
+            throw new DuplicateEntityException();
         }
     }
 
